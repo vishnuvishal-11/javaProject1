@@ -1,3 +1,4 @@
+//SAME PREVIOUS QUESTION BUT USED DYNAMIC APPROACH..
 import java.util.*;
 import java.util.stream.Collectors;
 
