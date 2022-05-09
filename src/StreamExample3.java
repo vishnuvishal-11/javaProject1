@@ -4,7 +4,7 @@ import java.util.stream.Collectors;
 
 
     public class StreamExample3 {
-        public static void main(String[] args) {
+        public static void main(String[] args)throws Exception {
 
             Map<String, Integer> map = new HashMap<>();
             Scanner sn=new Scanner(System.in);
