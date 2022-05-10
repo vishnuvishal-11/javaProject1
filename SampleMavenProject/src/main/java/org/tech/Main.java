@@ -10,9 +10,11 @@ public class Main {
         Gson gson = new Gson();
         GsonSample m = new GsonSample("1001","Employee1","Information Technology",
               "Developer",new String[]{"java","mangoDB","spring boot"});
+        GsonSample m2 = new GsonSample("1001","Employee1","Information Technology",
+                "Developer",new String[]{"java","mangoDB","spring boot"});
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Model mo = new Model(5510,"Inspiron 15 series",
-                    sdf.parse("11-11-2011"),"Dell", Arrays.asList(m));
+                    sdf.parse("11-11-2011"),"Dell", Arrays.asList(m,m2));
         try (FileWriter writer = new
               FileWriter("C:\\Users\\vishn\\IdeaProjects\\SampleMavenProject\\target\\classes\\org\\tech\\m.json"))
       {
@@ -21,5 +23,6 @@ public class Main {
           e.printStackTrace();
       }
         System.out.println(gson.toJson(mo));
+
     }
 }
