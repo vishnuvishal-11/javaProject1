@@ -1,28 +1,25 @@
 package org.tech;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import techno.GsonSample;
-
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 
-public class Main extends GsonSample  {
-    public Main(int id, String name, String branch, String designation,String[] languages_known) {
-        super(id, name, branch, designation,languages_known);
-    }
-
-    public static void main(String[] args) {
+public class Main {
+    public static void main(String[] args) throws Exception {
         Gson gson = new Gson();
-      Main m = new Main(1001,"Employee1","Information Technology",
+        GsonSample m = new GsonSample("1001","Employee1","Information Technology",
               "Developer",new String[]{"java","mangoDB","spring boot"});
-      try (FileWriter writer = new FileWriter("C:\\Users\\vishn\\IdeaProjects\\SampleMavenProject\\target\\classes\\org\\tech\\m.json")){
-          gson.toJson(m, writer);}
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Model mo = new Model(5510,"Inspiron 15 series",
+                    sdf.parse("11-11-2011"),"Dell", Arrays.asList(m));
+        try (FileWriter writer = new
+              FileWriter("C:\\Users\\vishn\\IdeaProjects\\SampleMavenProject\\target\\classes\\org\\tech\\m.json"))
+      {
+          gson.toJson(mo, writer);}
       catch (Exception e){
           e.printStackTrace();
       }
-
-        System.out.println(gson.toJson(m));
-        gson = new GsonBuilder().setPrettyPrinting().create();
-
+        System.out.println(gson.toJson(mo));
     }
 }
