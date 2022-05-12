@@ -1,22 +1,24 @@
 package org.example;
 
-import java.util.Collection;
-import java.util.List;
+public class NonPrimitiveType<T> {
+   Object ob;
+    public  NonPrimitiveType(Object b) {
+        ob=b;
+          return;
+    }
 
-public class NonPrimitiveType <T>{
+    @Override
+    public String toString() {
+        return " " +
+                " " + ob +
+                " ";
+    }
 
-        String objstr;
-        public String getObjstr(Number s) {
-            objstr=s.toString();
-            return objstr;
-        }
-        public String getObjstr(char s) {
-            objstr=Character.toString(s);
-            return objstr;
-        }
-        public String getObjstr(String s) {
-            return s;
-        }
+    public NonPrimitiveType getObj(int i){
+        NonPrimitiveType<T> ab=new NonPrimitiveType(ob);
+        return ab;
+    }
+
 
 
 

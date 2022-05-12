@@ -1,25 +1,20 @@
 package org.example;
 public class Main {
-    static int capacity;
-    public Main(String capacity) {
-        this.capacity = Integer.parseInt(capacity);
-    }
+    static int capacity=10;
+
     public static void main(String[] args) {
-        Main main= new Main("10");
         Implementation implementation = new Implementation(capacity);
-        NonPrimitiveType obj1=new NonPrimitiveType();
-        implementation.enque(obj1.getObjstr(1001));
-        implementation.enque(obj1.getObjstr("JAva"));
-        implementation.enque(obj1.getObjstr(11.01));
-        implementation.enque(obj1.getObjstr('c'));
-        System.out.println(implementation.display());
-        System.out.println(implementation.size());
-        System.out.println(implementation.deque());
-        System.out.println(implementation.size());
-        System.out.println(implementation.display());
-        System.out.println(implementation.deque());
-        System.out.println(implementation.size());
-        System.out.println(implementation.display());
-        System.out.println(implementation.peek());
+        NonPrimitiveType<Integer> obj1=new NonPrimitiveType(1001);
+        implementation.enque(obj1.toString());
+        implementation.enque(new NonPrimitiveType(1002).toString());
+        System.out.println("List of Elements in Queue : "+implementation.display());
+        System.out.println(implementation.deque()+" is removed");
+        System.out.println("Peek is "+implementation.peek());
+        System.out.println("List of Elements in Queue : "+implementation.display());
+        System.out.println(implementation.deque()+" is removed");
+        System.out.println("List of Elements in Queue : "+implementation.display());
+        System.out.println("Peek is "+implementation.peek());
+
+
     }
 }

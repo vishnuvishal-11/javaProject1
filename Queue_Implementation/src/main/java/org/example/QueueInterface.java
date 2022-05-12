@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface QueueInterface {
 
-    String enque(String obj);
+    String enque(Object obj);
 
-    String deque();
-    String peek();
-    List<String> display();
-    String size();
+    Object deque();
+    Object peek();
+    List<Object> display();
+    int size();
 }
