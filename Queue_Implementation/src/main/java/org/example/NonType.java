@@ -1,20 +1,21 @@
 package org.example;
 
-public class NonType<T> {  Object ob;
-    public NonType(Object b) { ob=b;
+public class NonType<T> {  T ob;
+    public  NonType() {
+    }
+    public  NonType(Object b) {
+        T ob= (T) b;
         return;
     }
 
-    @Override
-    public String toString() {
-        return " " +
-                " " + ob +
-                " ";
+
+    public Object toObj(Object b) { T ob=(T)b;
+        return ob;
     }
 
-    public NonType getObj(Object b){
-        NonType<T> ab=new NonType(b);
-        return ab;
-    }
+   // public T getObj(Object b){
+        // NonPrimitiveType<T> ab=new NonPrimitiveType(this.toObj(b));
+      //  return (T)b;
+
 }
 

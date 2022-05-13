@@ -55,50 +55,28 @@ public final class TestMain {
         Implementation implementation=new Implementation(2);
         implementation.enque(1000);
         implementation.enque(1211);
-       // implementation.deque();
-       //implementation.deque();
-        int s1=1000;
-        assertEquals(s1,implementation.deque());
+        assertEquals(1000,implementation.deque());
     }
 
     @Test
     public void testPeek(){
         Implementation implementation=new Implementation(2);
         Object i=implementation.peek();
-        String j=null;
-        assertEquals(i,j);
+        assertEquals(i,null);
 
     }
     @Test
-    public void testGetobj(){ int ob=5;
+    public void testToobj(){ int ob=5;
         NonPrimitiveType ab=new NonPrimitiveType(ob);
 
-        assertNotEquals(ob,ab.getObj(ob));
+        assertEquals(ob,ab.toObj(ob));
 
     }
+
     @Test
-    public void testToString(){ Object ob=5;
-        NonPrimitiveType ab=new NonPrimitiveType(ob);
-
-        assertNotEquals("5",ab.toString());
-
-        assertNotEquals(ob,new NonPrimitiveType(ob));
-
-    }
-    @Test
-    public void testGetobj2(){ int ob=5;
-        NonPrimitiveType ab=new NonPrimitiveType(ob);
-
-        assertNotEquals(ob,ab.getObj(ob));
-
-    }
-    @Test
-    public void testToString2(){ Object ob=5;
-        NonType abc=new NonType(ob);
-
-        assertNotEquals("5",abc.toString());
-
-        assertNotEquals(ob,new NonType(ob));
+    public void testToobj1(){ int ob=5;
+        NonType ab=new NonType(ob);
+        assertEquals(5,ab.toObj(ob));
         System.out.println("ALL TEST CASES EXECUTED SUCCESSFULLY");
     }
 
