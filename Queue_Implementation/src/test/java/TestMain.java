@@ -1,6 +1,7 @@
 import org.example.Implementation;
-import org.example.NonPrimitiveType;
-import org.example.NonType;
+import org.example.UserAddress;
+
+import org.example.UserPhoneNum;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
@@ -65,19 +66,21 @@ public final class TestMain {
         assertEquals(i,null);
 
     }
-    @Test
-    public void testToobj(){ int ob=5;
-        NonPrimitiveType ab=new NonPrimitiveType(ob);
 
-        assertEquals(ob,ab.toObj(ob));
+    @Test
+    public void testGet(){
+        UserAddress<Double> obj1 = new UserAddress<>();
+        obj1.set(121.1);
+        assertEquals(121.1,obj1.get());
+
+    }
+    @Test
+    public void testGet2(){
+        UserPhoneNum<Double> obj2 = new UserPhoneNum<>();
+        obj2.set(131.1);
+        assertEquals(131.1,obj2.get());
 
     }
 
-    @Test
-    public void testToobj1(){ int ob=5;
-        NonType ab=new NonType();
-       // assertEquals(5,(int)ab.toObj(ob));
-        System.out.println("ALL TEST CASES EXECUTED SUCCESSFULLY");
-    }
 
 }
