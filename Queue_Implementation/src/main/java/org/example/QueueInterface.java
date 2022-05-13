@@ -2,12 +2,15 @@ package org.example;
 
 import java.util.List;
 
-public interface QueueInterface {
+public interface QueueInterface<T> {
 
-    String enque(Object obj);
+ void  enque(T obj);
 
-    Object deque();
-    Object peek();
-    List<Object> display();
+
+   // String enque(Object obj);
+
+    T deque();
+    T peek();
+    List<String> display();
     int size();
 }
