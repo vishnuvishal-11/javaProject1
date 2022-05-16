@@ -7,9 +7,8 @@ import java.util.Date;
 public class UserAddress {
    String userName;
    int age;
-
-
     Date dob;
+    String location;
 
 //    public UserAddress(String userName, int age, Date dob, String location) {
 //    }
@@ -24,7 +23,7 @@ public class UserAddress {
                 "" ;
     }
 
-    String location;
+
 
 
     public String getUserName() {

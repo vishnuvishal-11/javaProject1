@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Implementation<T> implements QueueInterface<T> {
     private static int front = -1, rear = -1;
-    T obj = null;
     List<T> arrli;
 
 
@@ -15,10 +14,9 @@ public class Implementation<T> implements QueueInterface<T> {
 
     @Override
     public void enque(T obj) {
-
-        if (rear == 0) front = 0;
         if (obj != null) {
             rear++;
+            if (rear == 0) front = 0;
             arrli.add(rear, obj);
             System.out.println("A Object has entered the queue");
         }
@@ -26,7 +24,7 @@ public class Implementation<T> implements QueueInterface<T> {
     }
 
     @Override
-    public T deque() {
+    public T deque() {  T obj = null;
         int temp1 = front;
         T temp2;
         if (rear == -1 || (arrli.get(rear) == null)) {
@@ -39,8 +37,7 @@ public class Implementation<T> implements QueueInterface<T> {
             //arrli.set(rear, null);
             rear = -1;
             front = -1;
-            if (temp2 == null) System.out.println("Queue is empty ..So no deque is possible...");
-            else
+
                 obj = (T) (temp2).toString().replaceAll("null", " ")
                         .replaceAll("@0@", "null").replaceAll("@", " ").trim();
             System.out.println(obj + " is removed from queue and is of type : " + temp2.getClass());
@@ -51,8 +48,6 @@ public class Implementation<T> implements QueueInterface<T> {
         temp2 = arrli.get(front);
         front++;
         arrli.set(temp1, null);
-        if (temp2 == null) return null;
-        else
             obj = (T) (temp2).toString().replaceAll("null", " ")
                     .replaceAll("@0@", "").replaceAll("@", " ").trim();
         System.out.println(obj + " is removed from queue and is of type : " + temp2.getClass());
