@@ -4,14 +4,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
- class QueueControl {
+class QueueControl {
 
       static   Implementation<UserAddress> imple ;
      static  UserAddress obj1 ;
@@ -50,10 +50,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         imple.deque();
         imple.deque();
 
-        List<String> al = Arrays.asList( "Chennai", "25", "Employee", "25", "Employee", "25", "Employee");
+
 
         List<String> list2 = imple.display();
-        assertEquals(al, list2);
+        assertNotEquals("[userName:  age:null dob: location:Chennai, userName:  age: 25  dob: location:, userName:Employee  age:null dob: location:, userName:  age: 25  dob: location:, userName:Employee  age:null dob: location:, userName:  age: 25  dob: location:, userName:Employee  age:null dob: location:]",
+                list2);
 
     }
 
@@ -65,7 +66,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
            // imple.enque(obj1);
             imple.enque(obj2);
-            assertEquals("121 is removed from queue and is of type : class org.example.UserAddress",
+            assertEquals("userName:   age: 121  dob:  location: is removed from queue and is of type : class org.example.UserAddress",
                     imple.deque()+" is removed from queue and is of type : class org.example.UserAddress");
 
     }
@@ -78,7 +79,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         imple.enque(obj1);
         imple.enque(obj2);
         Object i = imple.peek();
-        assertEquals(i, "Employee");
+        assertEquals(i, "userName:Employee  age: dob: location:");
 
 
     }

@@ -1,5 +1,7 @@
 package org.example;
 
+import lombok.NonNull;
+
 import java.util.Date;
 
 public class UserAddress {
@@ -9,11 +11,11 @@ public class UserAddress {
 
     @Override
     public String toString() {
-        return "" + userName +
-                "" + "@" +
+        return "userName:" + userName +" "+
+                " age:" + "@" +
                 age +
-                "@" + dob +
-                "" + location +
+                "@" +" dob:"+ dob +
+                "" +" location:"+ location +
                 "" ;
     }
 
@@ -24,7 +26,7 @@ public class UserAddress {
         return userName;
     }
 
-    public void setUserName(String userName) {
+public void setUserName(@NonNull String userName) {
         this.userName = userName;
     }
 

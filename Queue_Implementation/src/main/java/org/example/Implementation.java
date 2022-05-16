@@ -1,6 +1,8 @@
 package org.example;
+
 import java.util.ArrayList;
 import java.util.List;
+
 public class Implementation<T> implements QueueInterface<T> {
     private static int front = -1, rear = -1;
     T obj = null;
@@ -16,7 +18,6 @@ public class Implementation<T> implements QueueInterface<T> {
         rear++;
         if (rear == 0) front = 0;
         if (obj != null) {
-            T b = obj;
             arrli.add(rear, obj);
             System.out.println("A Object has entered the queue");
         }
@@ -40,7 +41,7 @@ public class Implementation<T> implements QueueInterface<T> {
             if (temp2 == null) System.out.println("Queue is empty ..So no deque is possible...");
             else
                 obj = (T) (temp2).toString().replaceAll("null", " ")
-                        .replaceAll("@0@", "").replaceAll("@", " ").trim();
+                        .replaceAll("@0@", "null").replaceAll("@", " ").trim();
             System.out.println(obj + " is removed from queue and is of type : " + temp2.getClass());
             return obj;
 
@@ -83,7 +84,7 @@ public class Implementation<T> implements QueueInterface<T> {
             if (j != -1) {
                 if (arrli.get(j) != null) {
                     list.add(arrli.get(j).toString().replaceAll("null", "")
-                            .replaceAll("@0@", "").replaceAll("@", " ").trim());
+                            .replaceAll("@0@", "null").replaceAll("@", " ").trim());
                 } else
                     continue;
             }
