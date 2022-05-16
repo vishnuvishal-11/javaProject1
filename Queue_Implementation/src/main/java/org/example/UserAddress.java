@@ -7,7 +7,12 @@ import java.util.Date;
 public class UserAddress {
    String userName;
    int age;
-   Date dob;
+
+
+    Date dob;
+
+//    public UserAddress(String userName, int age, Date dob, String location) {
+//    }
 
     @Override
     public String toString() {
@@ -30,7 +35,15 @@ public void setUserName(@NonNull String userName) {
         this.userName = userName;
     }
 
-
+    public void set(@NonNull String userName,int age,Date dob,String location) {
+        this.userName = userName;
+        this.age = age;
+        this.dob = dob;
+        this.location = location;
+    }
+//    public int get() {
+//        return new UserAddress(userName,age,dob,location);
+//    }
     
     public int getAge() {
         return age;

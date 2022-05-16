@@ -15,9 +15,10 @@ public class Implementation<T> implements QueueInterface<T> {
 
     @Override
     public void enque(T obj) {
-        rear++;
+
         if (rear == 0) front = 0;
         if (obj != null) {
+            rear++;
             arrli.add(rear, obj);
             System.out.println("A Object has entered the queue");
         }
@@ -35,7 +36,7 @@ public class Implementation<T> implements QueueInterface<T> {
         if (rear == front) {
             temp2 = arrli.get(front);
             arrli.set(front, null);
-            arrli.set(rear, null);
+            //arrli.set(rear, null);
             rear = -1;
             front = -1;
             if (temp2 == null) System.out.println("Queue is empty ..So no deque is possible...");
