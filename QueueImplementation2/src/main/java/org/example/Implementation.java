@@ -1,84 +1,92 @@
 package org.example;
-
 import java.util.ArrayList;
 import java.util.List;
-
-
 public class Implementation<T> implements QueueInterface<T> {
     private static int front = -1, rear = -1;
-    private int size;
     T obj = null;
+    List<T> arrli;
+
+
     public Implementation() {
-
+        arrli = new ArrayList();
     }
-
-    public Implementation(int size) {
-
-        this.size = size;
-        // System.out.println(size);
-    }
-
-    public Object[] queue = new Object[10];
-
 
     @Override
     public void enque(T obj) {
-        if (rear != size - 1) {
-            rear++;
-            if (rear == 0) front = 0;
-            queue[rear] = obj;
+        rear++;
+        if (rear == 0) front = 0;
+        if (obj != null) {
+            T b = obj;
+            arrli.add(rear, obj);
+            System.out.println("A Object has entered the queue");
         }
-        // return("added the element successfully");
-        // return null;
+
     }
 
     @Override
     public T deque() {
-        int temp1 = front, temp = front;
-        T temp2 = null;
-        if (rear == front) {
-            if (front == size - 1) {
-                front = rear = -1;
-                System.out.println("Sry...Queue is Empty");
-                return (T) null;
-            }
+        int temp1 = front;
+        T temp2;
+        if (rear == -1 || (arrli.get(rear) == null)) {
+            System.out.println("Queue is empty ..So no deque is possible...");
+            return null;
         }
-        temp2 = (T) queue[front];
+        if (rear == front) {
+            temp2 = arrli.get(front);
+            arrli.set(front, null);
+            arrli.set(rear, null);
+            rear = -1;
+            front = -1;
+            if (temp2 == null) System.out.println("Queue is empty ..So no deque is possible...");
+            else
+                obj = (T) (temp2).toString().replaceAll("null", " ")
+                        .replaceAll("@0@", "").replaceAll("@", " ").trim();
+            System.out.println(obj + " is removed from queue and is of type : " + temp2.getClass());
+            return obj;
+
+        }
+
+        temp2 = arrli.get(front);
         front++;
-        queue[temp1] = null;
-        temp1 = size;
-        size = temp1 - 1;
-        return (T) (temp2);
+        arrli.set(temp1, null);
+        if (temp2 == null) return null;
+        else
+            obj = (T) (temp2).toString().replaceAll("null", " ")
+                    .replaceAll("@0@", "").replaceAll("@", " ").trim();
+        System.out.println(obj + " is removed from queue and is of type : " + temp2.getClass());
+
+        return obj;
     }
+
 
     @Override
     public T peek() {
         if (rear < 0) {
-            System.out.println("Sry...Queue is Empty");
+            System.out.print("Sry..Queue is Empty ,so ");
             return null;
-        } else
-            return (T) (queue[rear]);
+        } else if (arrli.get(rear) == null) return null;
+        else
+            return (T) arrli.get(rear).toString().replaceAll("null", "")
+                    .replaceAll("@0@", "").replaceAll("@", " ").trim();
     }
 
     public int size() {
-
         if (rear == -1) return (0);
-        else {
-            int i = rear - front + 1;
-            return i;
-        }
-
+        else
+            return rear - front + 1;
     }
 
     public List<String> display() {
-        int i = this.size();
         int j;
         List<String> list = new ArrayList<>();
-        for (j = 0; j <= i; j++) {
-            if (queue[j] != null)
-                list.add(queue[j].toString());
-            else
-                continue;
+        for (j = front; j <= rear; j++) {
+            if (j != -1) {
+                if (arrli.get(j) != null) {
+                    list.add(arrli.get(j).toString().replaceAll("null", "")
+                            .replaceAll("@0@", "").replaceAll("@", " ").trim());
+                } else
+                    continue;
+            }
         }
         return list;
     }
