@@ -1,10 +1,18 @@
 package org.example;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 
 import java.util.Date;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class UserAddress {
+    @NonNull
    String userName;
    int age;
     Date dob;
@@ -26,13 +34,7 @@ public class UserAddress {
 
 
 
-    public String getUserName() {
-        return userName;
-    }
 
-public void setUserName(@NonNull String userName) {
-        this.userName = userName;
-    }
 
     public void set(@NonNull String userName,int age,Date dob,String location) {
         this.userName = userName;
@@ -40,33 +42,7 @@ public void setUserName(@NonNull String userName) {
         this.dob = dob;
         this.location = location;
     }
-//    public int get() {
-//        return new UserAddress(userName,age,dob,location);
-//    }
-    
-    public int getAge() {
-        return age;
-    }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
 
 }

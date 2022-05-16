@@ -13,7 +13,7 @@ public class Implementation<T> implements QueueInterface<T> {
     }
 
     @Override
-    public void enque(T obj) {
+    public synchronized void enque(T obj) {
         if (obj != null) {
             rear++;
             if (rear == 0) front = 0;
@@ -24,7 +24,7 @@ public class Implementation<T> implements QueueInterface<T> {
     }
 
     @Override
-    public T deque() {  T obj = null;
+    public synchronized T deque() {  T obj = null;
         int temp1 = front;
         T temp2;
         if (rear == -1 || (arrli.get(rear) == null)) {
@@ -34,10 +34,8 @@ public class Implementation<T> implements QueueInterface<T> {
         if (rear == front) {
             temp2 = arrli.get(front);
             arrli.set(front, null);
-            //arrli.set(rear, null);
             rear = -1;
             front = -1;
-
                 obj = (T) (temp2).toString().replaceAll("null", " ")
                         .replaceAll("@0@", "null").replaceAll("@", " ").trim();
             System.out.println(obj + " is removed from queue and is of type : " + temp2.getClass());
@@ -81,8 +79,7 @@ public class Implementation<T> implements QueueInterface<T> {
                 if (arrli.get(j) != null) {
                     list.add(arrli.get(j).toString().replaceAll("null", "")
                             .replaceAll("@0@", "null").replaceAll("@", " ").trim());
-                } else
-                    continue;
+                }
             }
         }
         return list;

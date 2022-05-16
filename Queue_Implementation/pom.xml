@@ -37,7 +37,7 @@
             <artifactId>commons-collections</artifactId>
             <version>3.2.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.sun.org.apache.xml.internal/resolver -->
+
         <dependency>
             <groupId>com.sun.org.apache.xml.internal</groupId>
             <artifactId>resolver</artifactId>
