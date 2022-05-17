@@ -9,46 +9,54 @@ public class QueueControl {
         UserAddress obj1 = new UserAddress();
         UserAddress obj2 = new UserAddress();
         UserAddress obj3 = new UserAddress();
+        UserAddress obj4 = new UserAddress();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-//        obj1.setAge(25);
-//        obj1.setUserName("SeniorEmployee");
-//        obj1.setLocation(" Chennai");
-//        obj1.setDob(formatter.parse("11/11/1995"));
-//        obj2.setUserName("emp1");
-//        obj2.setLocation(" Chennai");
-//        obj2.setDob(formatter.parse("17/12/1995"));
-        obj1.set("emp1", 25, formatter.parse("11/11/1994"), "chennai");
+
+        obj1.set("emp1", 25, formatter.parse("11/11/1996"), "chennai");
         obj2.set("emp2", 26, formatter.parse("17/12/1995"), "chennai");
-        obj3.set("emp3", 27, formatter.parse("20/107/1996"), "chennai");
+        obj3.set("emp3", 27, formatter.parse("20/07/1994"), "chennai");
+        obj4.set("emp4", 28, formatter.parse("29/10/1995"), "chennai");
 
         Implementation<UserAddress> implementation = new Implementation();
 
 
         Thread t1 = new Thread(() -> {
-            implementation.enque(obj1);});
+            System.out.println(" In :"+Thread.currentThread().getName()+"& Priority:"+Thread.currentThread().getPriority());
+            implementation.enque(obj1);
+            implementation.enque(obj2);
+            System.out.println("<------------------------------------------------------------------------------>");
+            },"Thread1");
         Thread t2 = new Thread(() -> {
-            implementation.enque(obj2);});
+            System.out.println("In :"+Thread.currentThread().getName()+" & Priority is:"+Thread.currentThread().getPriority());
+            implementation.enque(obj3);
+            implementation.enque(obj4);
+            implementation.deque();
+            implementation.deque();
+            System.out.println("<------------------------------------------------------------------------------->");
+            },"Thread2");
         Thread t3 = new Thread(() -> {
-            implementation.enque(obj3);});
+            System.out.println("In :"+Thread.currentThread().getName()+" & Priority:"+Thread.currentThread().getPriority());
+            implementation.deque();
+            implementation.deque();
+            implementation.deque();
+            System.out.println("<-------------------------------------------------------------------------------->");
+            },"Thread3");
+
+
         t1.start();
-//        try{Thread.sleep(1000);}
-//        catch (Exception e){ e.printStackTrace();}
-        t1.join();                        //Or can be done with sleep inside try-catch
+        t1.join();
+        System.out.println("Is "+t1.getName()+" alive now: "+ t1.isAlive());
+        System.out.println("<------------------------------------------------------------------------------>");
         t2.start();
         t2.join();
-//        try{  Thread.sleep(1000);}
-//        catch (Exception e){ }
+        System.out.println("Is "+t2.getName()+" alive now: "+ t2.isAlive());
+        System.out.println("<------------------------------------------------------------------------------>");
         t3.start();
         t3.join();
-//        try{  Thread.sleep(1000);}
-//        catch (Exception e){ }
-//        try {
+        System.out.println("Is "+t3.getName()+" alive now: "+ t3.isAlive());
+        System.out.println("<------------------------------------------------------------------------------>");
 
-
-
-//        }
-//        catch (Exception e){ }//tr
-
+        System.out.println("In :"+Thread.currentThread().getName()+" Thread"+" & Priority:"+Thread.currentThread().getPriority());
         System.out.println("Peek is " + implementation.peek());
         System.out.println("List of Elements in Queue : " + implementation.display());
         System.out.println("size is " + implementation.size());

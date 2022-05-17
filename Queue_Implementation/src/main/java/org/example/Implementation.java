@@ -40,16 +40,13 @@ public class Implementation<T> implements QueueInterface<T> {
                         .replaceAll("@0@", "null").replaceAll("@", " ").trim();
             System.out.println(obj + " is removed from queue and is of type : " + temp2.getClass());
             return obj;
-
         }
-
         temp2 = arrli.get(front);
         front++;
         arrli.set(temp1, null);
             obj = (T) (temp2).toString().replaceAll("null", " ")
-                    .replaceAll("@0@", "").replaceAll("@", " ").trim();
+                        .replaceAll("@0@", "").replaceAll("@", " ").trim();
         System.out.println(obj + " is removed from queue and is of type : " + temp2.getClass());
-
         return obj;
     }
 
@@ -62,7 +59,7 @@ public class Implementation<T> implements QueueInterface<T> {
         } else if (arrli.get(rear) == null) return null;
         else
             return (T) arrli.get(rear).toString().replaceAll("null", "")
-                    .replaceAll("@0@", "").replaceAll("@", " ").trim();
+                      .replaceAll("@0@", "").replaceAll("@", " ").trim();
     }
 
     public int size() {
