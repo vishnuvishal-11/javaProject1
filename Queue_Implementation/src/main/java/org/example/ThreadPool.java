@@ -24,6 +24,7 @@ public class ThreadPool {
 
         SimpleDateFormat ft = new SimpleDateFormat("hh:mm:ss");
         ExecutorService threadPool = Executors.newFixedThreadPool(POOL_SIZE);
+        System.out.println("Performing  Asynchronous Task");
 
         Runnable r1 = () -> {
             try {
