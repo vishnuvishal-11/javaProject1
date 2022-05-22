@@ -1,53 +1,49 @@
 package model;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Component
-@Scope(value="prototype")
-@EntityScan
+@Validated
 public class UserRequest {
+@NotEmpty
+@NotNull(message = "name cannot be null")
+    String userName;
 
-    @NonNull
-   String userName;
-   String age;
+    int age=0;
+    @NotEmpty
+    @NotNull(message = "dob cannot be null")
     String dob;
+    @NotEmpty
+    @NotNull(message = "dob cannot be null")
     String location;
 
-//    public UserAddress(String userName, int age, Date dob, String location) {
-//    }
+
+
 
     @Override
     public String toString() {
-        return "userName:" + userName +" "+
-                " age:" + "@" +
+        return "userName:" + userName + " " +
+                " age:" +
                 age +
-                "@" +" dob:"+ dob +
-                "" +" location:"+ location +
-                "" ;
+                 " dob:" + dob +
+                "" + " location:" + location +
+                "";
     }
 
-
-
-
-
-
-    public void set(@NonNull String userName, String age, String dob, String location) {
-        this.userName = userName;
-        this.age = age;
-        this.dob = dob;
-        this.location = location;
+    public void set( String userName,int age , String dob, String location) {
+            this.userName = userName;
+            this.age = age;
+            this.dob = dob;
+            this.location = location;
     }
-
 
 
 }

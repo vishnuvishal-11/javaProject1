@@ -1,14 +1,12 @@
 package ServiceImpl;
 
 import Service.QueueInterface;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
-
-
+import org.springframework.validation.annotation.Validated;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Validated
 @Component
 public class Implementation<T> implements QueueInterface<T> {
 
@@ -23,12 +21,12 @@ public class Implementation<T> implements QueueInterface<T> {
     }
 
     @Override
-    public synchronized void enque(T obj) {
+    public synchronized void enque( T obj) {
         if (obj != null) {
             rear++;
             if (rear == 0) front = 0;
             arrli.add(rear, obj);
-            System.out.println("A Object has entered the queue");
+
         }
 
     }
@@ -38,7 +36,6 @@ public class Implementation<T> implements QueueInterface<T> {
         int temp1 = front;
         T temp2;
         if (rear == -1 || (arrli.get(rear) == null)) {
-            System.out.println("Queue is empty ..So no deque is possible...");
             return null;
         }
         if (rear == front) {
@@ -48,7 +45,7 @@ public class Implementation<T> implements QueueInterface<T> {
             front = -1;
                 obj = (T) (temp2).toString().replaceAll("null", " ")
                         .replaceAll("@0@", "null").replaceAll("@", " ").trim();
-            System.out.println(obj + " is removed from queue and is of type : " + temp2.getClass());
+
             return obj;
         }
         temp2 = arrli.get(front);
@@ -56,7 +53,7 @@ public class Implementation<T> implements QueueInterface<T> {
         arrli.set(temp1, null);
             obj = (T) (temp2).toString().replaceAll("null", " ")
                         .replaceAll("@0@", "").replaceAll("@", " ").trim();
-        System.out.println(obj + " is removed from queue and is of type : " + temp2.getClass());
+
         return obj;
     }
 
@@ -85,8 +82,9 @@ public class Implementation<T> implements QueueInterface<T> {
         for (j = front; j <= rear; j++) {
             if (j != -1) {
                 if (arrli.get(j) != null) {
-                     list.add(arrli.get(j).toString().replaceAll("null", "")
-                            .replaceAll("@0@", "null").replaceAll("@", " ").trim());
+                     list.add(arrli.get(j).toString());
+//                             .replaceAll("null", "")
+//                            .replaceAll("@0@", "null").replaceAll("@", " ").trim());
                 }
             }
         }
