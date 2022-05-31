@@ -1,10 +1,4 @@
-resilience4j:
-  ratelimiter:
-    configs:
-      default:
-        limitForPeriod: 10
-        limitRefreshPeriod: 60s
-        timeoutDuration: 0
-    instances:
-      dropOnServer:
-        baseConfig: default
+
+
+
+

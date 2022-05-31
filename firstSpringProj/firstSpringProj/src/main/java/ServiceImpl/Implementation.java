@@ -43,16 +43,16 @@ public class Implementation<T> implements QueueInterface<T> {
             arrli.set(front, null);
             rear = -1;
             front = -1;
-                obj = (T) (temp2).toString().replaceAll("null", " ")
-                        .replaceAll("@0@", "null").replaceAll("@", " ").trim();
+            obj = (T) (temp2).toString().replaceAll("null", " ")
+                    .replaceAll("@0@", "null").replaceAll("@", " ").trim();
 
             return obj;
         }
         temp2 = arrli.get(front);
         front++;
         arrli.set(temp1, null);
-            obj = (T) (temp2).toString().replaceAll("null", " ")
-                        .replaceAll("@0@", "").replaceAll("@", " ").trim();
+        obj = (T) (temp2).toString().replaceAll("null", " ")
+                .replaceAll("@0@", "").replaceAll("@", " ").trim();
 
         return obj;
     }
@@ -66,7 +66,7 @@ public class Implementation<T> implements QueueInterface<T> {
         } else if (arrli.get(rear) == null) return null;
         else
             return (T) arrli.get(rear).toString().replaceAll("null", "")
-                      .replaceAll("@0@", "").replaceAll("@", " ").trim();
+                    .replaceAll("@0@", "").replaceAll("@", " ").trim();
     }
 
     public int size() {
@@ -82,7 +82,7 @@ public class Implementation<T> implements QueueInterface<T> {
         for (j = front; j <= rear; j++) {
             if (j != -1) {
                 if (arrli.get(j) != null) {
-                     list.add(arrli.get(j).toString());
+                    list.add(arrli.get(j).toString());
 //                             .replaceAll("null", "")
 //                            .replaceAll("@0@", "null").replaceAll("@", " ").trim());
                 }
@@ -92,7 +92,3 @@ public class Implementation<T> implements QueueInterface<T> {
     }
 
 }
-
-
-
-
