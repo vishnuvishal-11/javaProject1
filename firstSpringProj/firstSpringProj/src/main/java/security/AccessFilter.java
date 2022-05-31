@@ -46,20 +46,16 @@ public class AccessFilter implements Filter {
 
                 accessList.getAccessHistory().computeIfPresent(ipAndPort, (CounterNumber, targetDate) -> {
                     Counter counter = accessList.getAccessHistory().get(ipAndPort);
-                    if (counter.getNumber() <= 10) {
+
+                    if ((Calendar.getInstance().getTime().compareTo(counter.getTargetDate()) >= 0 && counter.getNumber() != 9))
+                        counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
+                    else if (counter.getNumber() <= 8)
                         counter.setNumber(counter.getNumber() + 1);
-                        accessList.getAccessHistory().put(ipAndPort, counter);
-                        logger.info(" " + counter);
-                    }
-                    Date date = Calendar.getInstance().getTime();
-                    if (date.compareTo(counter.getTargetDate()) >= 0) {
-                        counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));                
-                        logger.info("Refreshed :" + counter);
-                    } else if (counter.getNumber() == 10) {
-                        counter.setCounter(11, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
+                    else if (counter.getNumber() == 9) {
+                        counter.setCounter(10, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
                         logger.info("Too many inputs..retry after" + counter.getTargetDate());
                         throw new RuntimeException("too much of  input in one minute...");
-                    } else if (counter.getNumber() > 10)
+                    } else if (counter.getNumber() > 9)
                         throw new RuntimeException("too much of  input in one minute...");
 
                     return counter;
@@ -87,4 +83,8 @@ public class AccessFilter implements Filter {
 }
 
 
-
+//                    Date date = Calendar.getInstance().getTime();
+//                    if (date.compareTo(counter.getTargetDate()) >= 0) {
+//                        counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
+//                        logger.info("Refreshed :" + counter);
+//                    }
