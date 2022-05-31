@@ -43,56 +43,7 @@ public class AccessFilter implements Filter {
                 String remoteAddress = request.getRemoteAddr();
                 String port = String.valueOf(request.getRemotePort());
                 String ipAndPort = remoteAddress + port;
-
-//                  Counter counter = null;
-//
-//               Date target = new Date();
-//                //<--- if condition-Block where count gets decremented for existing ipAndPort-->
-//                if (accessList.getAccessHistory().containsKey(ipAndPort)) {
-//                    counter = accessList.getAccessHistory().get(ipAndPort);
-//                    //<--- Nested if-1   -->
-//                    if (counter.getNumber() <= 10) {
-//                        counter.setNumber(counter.getNumber() + 1);                // here we are just incrementing the counter
-//                        accessList.getAccessHistory().put(ipAndPort, counter);
-//                        logger.info("  out of 10 only: " + counter.getNumber() + " inputs  inserted in this one minute");
-//                    }
-//                    //<--- Nested if-2   -->
-//                    if ((Calendar.getInstance().getTime()).compareTo(counter.getTargetDate()) >= 0 && counter.getNumber() < 9) {
-//                        //<--- If the Target time is reached but inputs are less than threshold  then counter is refreshed here -->
-//                        long timeInSec = Calendar.getInstance().getTimeInMillis();
-//                        target = new Date(timeInSec + (1 * 60 * 1000));
-//                        counter.setCounter(0, target);
-//                        logger.info("Refreshed :" + counter);
-//                    }
-//                    //<--- Nested if-3   -->
-//                    if ((Calendar.getInstance().getTime()).compareTo(counter.getTargetDate()) >= 0) {
-//                        //<--- If the Target time is not reached but num of  inputs has reached threshold  then counter is Retrieved back  here -->
-//                        long timeInSec = Calendar.getInstance().getTimeInMillis();
-//                        target = new Date(timeInSec + (1 * 60 * 1000));
-//                        counter.setCounter(0,target);
-//                        logger.info("Retrieved back .... " + counter);
-//                    }
-//                    //<--- Nested if-4   -->
-//                    if (counter.getNumber() >= 10) {
-//                        //<--- here to 2 condition checks are must if u stop the increment at counter number 10 at nested block 1 (line no 55) ,then
-//                        // all inputs after blocked state will change the target time with respect to the time that input is given  -->
-//                        if (counter.getNumber() == 10) {
-//                            long timeInSecs = Calendar.getInstance().getTimeInMillis();
-//                            Date afterAdding1Minute = new Date(timeInSecs + (1 * 60 * 1000));      //target time is set
-//                            counter.setCounter(10, afterAdding1Minute);
-//                            logger.info("Too many inputs..retry after" + counter.getTargetDate());
-//                        }
-//                        throw new RuntimeException("too much of  input in one minute...");
-//                    }
-//                } else {
-//                    //<--- else block- where newly entered ipAndPort Deals here and target counter is set-->
-//                    long timeInSec = Calendar.getInstance().getTimeInMillis();
-//                    target = new Date(timeInSec + (1 * 60 * 1000));       //target limit is set here itself at the beginning
-//                    counter = new Counter();
-//                    counter.setCounter(0, target);           //before this target ,if u reach 10 inputs . then enque will be blocked(nested if-4)
-//                    accessList.getAccessHistory().put(ipAndPort, counter);       // or else refreshed it will be refreshed (nested if-2)
-//                    logger.info(" " + counter);
-//                }
+                
                 accessList.getAccessHistory().computeIfPresent(ipAndPort, (CounterNumber, targetDate) -> {
                     Counter counter = accessList.getAccessHistory().get(ipAndPort);
                     //<---  If-1 --->
