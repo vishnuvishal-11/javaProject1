@@ -59,7 +59,7 @@ public class AccessFilter implements Filter {
                         counter.setCounter(0,new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));                       //Reset is done
                         logger.info("Refreshed :" + counter);
                     }else{
-                        if (counter.getNumber() == 10) { //to avoid input after reaching threshold should on keep on changing target time
+                        if (counter.getNumber() == 10) { //to avoid inputs after reaching threshold to keep on changing target time
                             counter.setCounter(11,new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
                             logger.info("Too many inputs..retry after" + counter.getTargetDate());
                         }
