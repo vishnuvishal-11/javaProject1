@@ -53,13 +53,13 @@ public class AccessFilter implements Filter {
                     }
                     Date date = Calendar.getInstance().getTime();
                     if (date.compareTo(counter.getTargetDate()) >= 0) {
-                        counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));                
+                        counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));                       //Reset is done
                         logger.info("Refreshed :" + counter);
                     } else if (counter.getNumber() == 10) {
                         counter.setCounter(11, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
                         logger.info("Too many inputs..retry after" + counter.getTargetDate());
                         throw new RuntimeException("too much of  input in one minute...");
-                    } else if (counter.getNumber() > 10)
+                    } else if (counter.getNumber() >= 10)
                         throw new RuntimeException("too much of  input in one minute...");
 
                     return counter;
