@@ -43,7 +43,7 @@ public class AccessFilter implements Filter {
                 String remoteAddress = request.getRemoteAddr();
                 String port = String.valueOf(request.getRemotePort());
                 String ipAndPort = remoteAddress + port;
-                
+
                 accessList.getAccessHistory().computeIfPresent(ipAndPort, (CounterNumber, targetDate) -> {
                     Counter counter = accessList.getAccessHistory().get(ipAndPort);
                     //<---  If-1 --->
@@ -55,21 +55,16 @@ public class AccessFilter implements Filter {
                     }
                     Date date=Calendar.getInstance().getTime();
                     //<---  If-2 --->
-                    if ((date.compareTo(counter.getTargetDate()) >= 0 && counter.getNumber() < 9)||
-                            (date.compareTo(counter.getTargetDate()) >= 0)) {
-                        //<--- Condition 1 :check if Target time is reached but num of  inputs are less than threshold , then counter is refreshed here -->
-                        //<--- Condition 2 :check if Target time is not reached but num of inputs are equal or greater than threshold , then counter is retrieved here -->
+                    if (date.compareTo(counter.getTargetDate()) >= 0) {
                         counter.setCounter(0,new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));                       //Reset is done
                         logger.info("Refreshed :" + counter);
-                    }
-                    //<---  If-3 --->
-                    if (counter.getNumber() >= 10) {
-                        //<--- here to 2 condition checks are must if u stop the increment at counter number 10 at If -1 (line no 102) ,then
-                        // all inputs after blocked state will change the target time with respect to the time that input is given  -->
-                        if (counter.getNumber() == 10) {
+                    }else{
+                        if (counter.getNumber() == 10) { //to avoid input after reaching threshold should on keep on changing target time
                             counter.setCounter(11,new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
                             logger.info("Too many inputs..retry after" + counter.getTargetDate());
                         }
+                        if (counter.getNumber() >= 10)  //this if condition is must because , without this  counter number having values less
+                            //than 9 that didn't reach target time (i.e,If-2 Condition fails) will also throw the exception..
                         throw new RuntimeException("too much of  input in one minute...");
                     }
                     return counter;
