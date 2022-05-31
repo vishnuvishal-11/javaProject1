@@ -64,7 +64,6 @@ public class AccessFilter implements Filter {
                 accessList.getAccessHistory().computeIfAbsent(ipAndPort, (counterObj) -> {
                     Counter counter = new Counter();
                     counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
-                    logger.info(" " + counter);
                     return counter;
                 });
 
@@ -83,8 +82,4 @@ public class AccessFilter implements Filter {
 }
 
 
-//                    Date date = Calendar.getInstance().getTime();
-//                    if (date.compareTo(counter.getTargetDate()) >= 0) {
-//                        counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
-//                        logger.info("Refreshed :" + counter);
-//                    }
+
