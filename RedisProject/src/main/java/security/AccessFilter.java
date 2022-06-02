@@ -19,6 +19,15 @@
 //public class AccessFilter implements Filter {
 //    Logger logger = LoggerFactory.getLogger(AccessFilter.class);
 //
+
+//import org.springframework.beans.factory.annotation.Value;
+
+//
+//@Value("${Ratelimit.count}")
+//    int count;
+//
+//@Value("${Ratelimit.penalty.minutes}")
+//    int penalty;
 //    @Autowired
 //    AccessList accessList;
 //    @Value("${services.service}")
@@ -47,15 +56,15 @@
 //                accessList.getAccessHistory().computeIfPresent(ipAndPort, (CounterNumber, targetDate) -> {
 //                    Counter counter = accessList.getAccessHistory().get(ipAndPort);
 //
-//                    if ((Calendar.getInstance().getTime().compareTo(counter.getTargetDate()) >= 0 && counter.getNumber() != 9)) //10
-//                        counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
-//                    else if (counter.getNumber() <= 8)
+//                    if ((Calendar.getInstance().getTime().compareTo(counter.getTargetDate()) >= 1 && counter.getNumber() != count))
+//                        counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000)));
+//                    else if (counter.getNumber() <= count-1)
 //                        counter.setNumber(counter.getNumber() + 1);
-//                    else if (counter.getNumber() == 9) {
-//                        counter.setCounter(10, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
+//                    else if (counter.getNumber() == count) {
+//                        counter.setCounter(count+1, new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000)));
 //                        logger.info("Too many inputs..retry after" + counter.getTargetDate());
 //                        throw new RuntimeException("too much of  input in one minute...");
-//                    } else if (counter.getNumber() > 9)
+//                    } else if (counter.getNumber() > count)
 //                        throw new RuntimeException("too much of  input in one minute...");
 //
 //                    return counter;
@@ -63,7 +72,7 @@
 //
 //                accessList.getAccessHistory().computeIfAbsent(ipAndPort, (counterObj) -> {
 //                    Counter counter = new Counter();
-//                    counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
+//                    counter.setCounter(1, new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000)));
 //                    return counter;
 //                });
 //

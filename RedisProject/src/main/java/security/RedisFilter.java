@@ -90,6 +90,12 @@ public class RedisFilter implements Filter {
     @Value("${services.service}")
     String uri;
 
+    @Value("${Ratelimit.count}")
+    int count;
+
+    @Value("${Ratelimit.penalty.minutes}")
+    int penalty;
+
     RedisTemplate<String, AccessList> redisTemplate;
     @Autowired
     RedisService redisService;
@@ -116,37 +122,40 @@ public class RedisFilter implements Filter {
                 String ipAndPort = remoteAddress + port;
 
                 if (redisService.existsById(ipAndPort)) {
-
-                    redisService.findById(ipAndPort).getAccessHistory().computeIfPresent(ipAndPort, (CounterNumber, targetDate) -> {
-                        Counter counter = accessList.getAccessHistory().get(ipAndPort);
-
-                        if ((Calendar.getInstance().getTime().compareTo(counter.getTargetDate()) >= 1 && counter.getNumber() != 10)) {
-                            counter.setCounter(1, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
+                        Counter counter = accessList.getCounter();
+                        if ((Calendar.getInstance().getTime().compareTo(counter.getTargetDate()) >= 1 && counter.getNumber() != count)) {
+                            Date date =new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
+                            counter.setTargetDate(date);
+                            counter.setCounter(1,date);
+                            accessList.setCounter(counter);
                             redisService.save(accessList);
-                        } else if (counter.getNumber() <= 9) {
+                        } else if (counter.getNumber() <= count-1) {
                             counter.setNumber(counter.getNumber() + 1);
+                            accessList.setCounter(counter);
                             redisService.save(accessList);
-                        } else if (counter.getNumber() == 10) {
-                            counter.setCounter(11, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
+                    logger.info("in if" + accessList.getCounter());
+                    logger.info("in if find by counter" + redisService.findById(ipAndPort));
+                        } else if (counter.getNumber() == count) {
+                            Date date =new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
+                            counter.setTargetDate(date);
+                            counter.setCounter(count+1, date);
                             logger.info("Too many inputs..retry after" + counter.getTargetDate());
+                            accessList.setCounter(counter);
                             redisService.save(accessList);
                             throw new RuntimeException("too much of  input in one minute...");
-                        } else if (counter.getNumber() > 10)
+                        } else if (counter.getNumber() > count)
                             throw new RuntimeException("too much of  input in one minute...");
-
-                        return counter;
-                    });
                 } else {
                     Counter counter = new Counter();
-                    counter.setCounter(1, new Date(Calendar.getInstance().getTimeInMillis() + (1 * 60 * 1000)));
-                    accessList = new AccessList(ipAndPort, counter);
-                    accessList.setAccessHistory(ipAndPort, counter);
+                    Date date =new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
+                    counter.setTargetDate(date);
+                    counter.setCounter(1, date);
+                    accessList = new AccessList();
+                    accessList.setIp(ipAndPort);
+                    accessList.setCounter(counter);
                     redisService.save(accessList);
-                    redisService.findById(ipAndPort)
-                            .getAccessHistory().computeIfAbsent(ipAndPort, (counterObj) -> {
-
-                                return counter;
-                            });
+                    logger.info("in else" + accessList.getCounter());
+                    logger.info("in else find by counter" + redisService.findById(ipAndPort));
                 }
             }
             chain.doFilter(request, response);

@@ -1,9 +1,6 @@
 package security;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
@@ -17,6 +14,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class AccessList implements Serializable {
 
     private String ip;
