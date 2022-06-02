@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import security.AccessList;
 import security.Counter;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RedisService {
     Logger logger = LoggerFactory.getLogger(RedisService.class);
+    Date date;
 
 
 
@@ -29,9 +32,9 @@ public class RedisService {
     public void save(AccessList accessList) {
         if(this.existsById(accessList.getIp())){
         redisTemplate.opsForHash().put("access", accessList.getIp(), accessList.getCounter());
-
         }
         else{  redisTemplate.opsForHash().put("access", accessList.getIp(), accessList.getCounter());
+            date =new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
         redisTemplate.expire("access",penalty, TimeUnit.MINUTES);
         }
     }

@@ -10,7 +10,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -123,22 +122,19 @@ public class RedisFilter implements Filter {
 
                 if (redisService.existsById(ipAndPort)) {
                         Counter counter = accessList.getCounter();
-                        if ((Calendar.getInstance().getTime().compareTo(counter.getTargetDate()) >= 1 && counter.getNumber() != count)) {
+                        if ((Calendar.getInstance().getTime().compareTo(counter.getTargetDate()) >= 0 && counter.getNumber() != count)) {
                             Date date =new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
                             counter.setTargetDate(date);
-                            counter.setCounter(1,date);
                             accessList.setCounter(counter);
                             redisService.save(accessList);
                         } else if (counter.getNumber() <= count-1) {
                             counter.setNumber(counter.getNumber() + 1);
                             accessList.setCounter(counter);
                             redisService.save(accessList);
-                    logger.info("in if" + accessList.getCounter());
-                    logger.info("in if find by counter" + redisService.findById(ipAndPort));
                         } else if (counter.getNumber() == count) {
                             Date date =new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
                             counter.setTargetDate(date);
-                            counter.setCounter(count+1, date);
+                            counter.setNumber(count+1);
                             logger.info("Too many inputs..retry after" + counter.getTargetDate());
                             accessList.setCounter(counter);
                             redisService.save(accessList);
@@ -149,13 +145,11 @@ public class RedisFilter implements Filter {
                     Counter counter = new Counter();
                     Date date =new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
                     counter.setTargetDate(date);
-                    counter.setCounter(1, date);
+                    counter.setNumber(1);
                     accessList = new AccessList();
                     accessList.setIp(ipAndPort);
                     accessList.setCounter(counter);
                     redisService.save(accessList);
-                    logger.info("in else" + accessList.getCounter());
-                    logger.info("in else find by counter" + redisService.findById(ipAndPort));
                 }
             }
             chain.doFilter(request, response);
