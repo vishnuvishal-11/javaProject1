@@ -56,7 +56,7 @@
 //                accessList.getAccessHistory().computeIfPresent(ipAndPort, (CounterNumber, targetDate) -> {
 //                    Counter counter = accessList.getAccessHistory().get(ipAndPort);
 //
-//                    if ((Calendar.getInstance().getTime().compareTo(counter.getTargetDate()) >= 1 && counter.getNumber() != count))
+//                    if ((Calendar.getInstance().getTime().compareTo(counter.getTargetDate()) >= 0 && counter.getNumber() != count))
 //                        counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000)));
 //                    else if (counter.getNumber() <= count-1)
 //                        counter.setNumber(counter.getNumber() + 1);

@@ -22,7 +22,6 @@ public class RedisService {
     Date date;
 
 
-
     @Value("${Ratelimit.penalty.minutes}")
     int penalty;
 
@@ -30,12 +29,12 @@ public class RedisService {
     private RedisTemplate<String, AccessList> redisTemplate;
 
     public void save(AccessList accessList) {
-        if(this.existsById(accessList.getIp())){
-        redisTemplate.opsForHash().put("access", accessList.getIp(), accessList.getCounter());
-        }
-        else{  redisTemplate.opsForHash().put("access", accessList.getIp(), accessList.getCounter());
-            date =new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
-        redisTemplate.expire("access",penalty, TimeUnit.MINUTES);
+        if (this.existsById(accessList.getIp())) {
+            redisTemplate.opsForHash().put("access", accessList.getIp(), accessList.getCounter());
+        } else {
+            redisTemplate.opsForHash().put("access", accessList.getIp(), accessList.getCounter());
+            date = new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
+            redisTemplate.expire("access", penalty, TimeUnit.MINUTES);
         }
     }
 
@@ -51,7 +50,6 @@ public class RedisService {
         return (Counter) redisTemplate.opsForHash().get("access", Ip);
 
     }
-
 
 
 }
