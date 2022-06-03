@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,10 +20,10 @@ import java.util.*;
 
 @Component
 @EnableCaching
-public class RedisFilter implements Filter {
+@WebFilter("redis")
+public class RedisFilter implements Filter, Factory {
     Logger logger = LoggerFactory.getLogger(RedisFilter.class);
-    AccessList accessList;
-    AccessListRepository accessListRepository;
+
 
     @Value("${services.service}")
     String uri;
@@ -33,7 +34,6 @@ public class RedisFilter implements Filter {
     @Value("${Ratelimit.penalty.minutes}")
     int penalty;
 
-    RedisTemplate<String, AccessList> redisTemplate;
     @Autowired
     RedisService redisService;
 
@@ -50,44 +50,39 @@ public class RedisFilter implements Filter {
 
 
         try {
-
             String methodUri = httpServletRequest.getRequestURI();
-
             if (methodUri.equalsIgnoreCase(uri)) {
-                String remoteAddress = request.getRemoteAddr();
-                String port = String.valueOf(request.getRemotePort());
-                String ipAndPort = remoteAddress + port;
+                String ip = null;
+                if (request != null) {
+                    ip = ((HttpServletRequest) request).getHeader("X-FORWARDED-FOR");
+                    if (ip == null || "".equals(ip)) {
+                        ip = request.getRemoteAddr();
+                    }
+                }
+                Date date;
 
-                if (redisService.existsById(ipAndPort)) {
-                    Counter counter = accessList.getCounter();
-                    if ((Calendar.getInstance().getTime().compareTo(counter.getTargetDate()) >= 0 && counter.getNumber() != count)) {
-                        Date date = new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
-                        counter.setTargetDate(date);
-                        accessList.setCounter(counter);
-                        redisService.save(accessList);
-                    } else if (counter.getNumber() <= count - 1) {
-                        counter.setNumber(counter.getNumber() + 1);
-                        accessList.setCounter(counter);
-                        redisService.save(accessList);
-                    } else if (counter.getNumber() == count) {
-                        Date date = new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
-                        counter.setTargetDate(date);
-                        counter.setNumber(count + 1);
-                        logger.info("Too many inputs..retry after" + counter.getTargetDate());
-                        accessList.setCounter(counter);
-                        redisService.save(accessList);
+                if (redisService.existsById(ip)) {
+                    int check = (int) redisService.findById(ip);
+                    if (redisService.findById(ip) != count && Calendar.getInstance().getTime().compareTo(redisService.findDateById(ip)) >= 0) {
+                        date = new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
+                        redisService.save(ip, 1, date);
+                    } else if (redisService.findById(ip) <= count - 1) {
+                        logger.info("incremented");
+                        check = check + 1;
+                        date = new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
+                        redisService.save(ip, check, date);
+                    } else if (check == count) {
+                        date = new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
+                        redisService.save(ip, count + 1, date);
+                        logger.info("too many inputs ..try after .. " + date);
                         throw new RuntimeException("too much of  input in one minute...");
-                    } else if (counter.getNumber() > count)
+                    } else if (check > count) {
                         throw new RuntimeException("too much of  input in one minute...");
+                    }
                 } else {
-                    Counter counter = new Counter();
-                    Date date = new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
-                    counter.setTargetDate(date);
-                    counter.setNumber(1);
-                    accessList = new AccessList();
-                    accessList.setIp(ipAndPort);
-                    accessList.setCounter(counter);
-                    redisService.save(accessList);
+                    logger.info("in else..newly inserted");
+                    date = new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
+                    redisService.save(ip, 1, date);
                 }
             }
             chain.doFilter(request, response);
@@ -100,5 +95,10 @@ public class RedisFilter implements Filter {
     @Override
     public void destroy() {
         Filter.super.destroy();
+    }
+
+    @Override
+    public void display() {
+        //logger.info("RedisFilter is Used....");
     }
 }

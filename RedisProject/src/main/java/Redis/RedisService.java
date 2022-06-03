@@ -3,16 +3,13 @@ package Redis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import security.AccessList;
 import security.Counter;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
@@ -26,28 +23,39 @@ public class RedisService {
     int penalty;
 
     @Autowired
-    private RedisTemplate<String, AccessList> redisTemplate;
+    @Qualifier("redis1")
+    private RedisTemplate<String, Integer> redis1redisTemplate;
+    @Autowired
+    @Qualifier("redis2")
+    RedisTemplate<String, Date> redis2redisTemplate;
 
-    public void save(AccessList accessList) {
-        if (this.existsById(accessList.getIp())) {
-            redisTemplate.opsForHash().put("access", accessList.getIp(), accessList.getCounter());
+    public void save(String ip, int count, Date date) {
+        if (this.existsById(ip)) {
+            redis1redisTemplate.opsForHash().put("access", ip, count);
+            redis2redisTemplate.opsForHash().put("access2", ip, date);
         } else {
-            redisTemplate.opsForHash().put("access", accessList.getIp(), accessList.getCounter());
-            date = new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000));
-            redisTemplate.expire("access", penalty, TimeUnit.MINUTES);
+            redis1redisTemplate.opsForHash().put("access", ip, count);
+            redis2redisTemplate.opsForHash().put("access2", ip, date);
+            redis1redisTemplate.expire("access",penalty,TimeUnit.MINUTES);
+            redis1redisTemplate.expire("access2",penalty,TimeUnit.MINUTES);
         }
     }
 
 
     public boolean existsById(String Ip) {
-        if (redisTemplate.opsForHash().hasKey("access", Ip))
+        if (redis1redisTemplate.opsForHash().hasKey("access", Ip) && redis2redisTemplate.opsForHash().hasKey("access2", Ip))
             return true;
         else
             return false;
     }
 
-    public Counter findById(String Ip) {
-        return (Counter) redisTemplate.opsForHash().get("access", Ip);
+    public int findById(String Ip) {
+        return (int) redis1redisTemplate.opsForHash().get("access", Ip);
+
+    }
+
+    public Date findDateById(String Ip) {
+        return (Date) redis2redisTemplate.opsForHash().get("access2", Ip);
 
     }
 

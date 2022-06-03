@@ -15,6 +15,7 @@ import java.util.Map;
 @Setter
 @ToString
 @NoArgsConstructor
+@Component
 public class AccessList implements Serializable {
 
     private String ip;

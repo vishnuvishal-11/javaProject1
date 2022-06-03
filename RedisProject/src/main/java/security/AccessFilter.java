@@ -7,21 +7,22 @@
 //import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.stereotype.Component;
-//
 //import javax.servlet.*;
+//import javax.servlet.annotation.WebFilter;
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
 //import java.io.IOException;
 //import java.util.*;
-//import java.util.concurrent.atomic.AtomicReference;
+//
 //
 //@Component
-//public class AccessFilter implements Filter {
+//@WebFilter("custom")
+//public class AccessFilter implements Filter,Factory {
 //    Logger logger = LoggerFactory.getLogger(AccessFilter.class);
 //
-
-//import org.springframework.beans.factory.annotation.Value;
-
+//
+//
+//
 //
 //@Value("${Ratelimit.count}")
 //    int count;
@@ -33,6 +34,8 @@
 //    @Value("${services.service}")
 //    String uri;
 //
+//
+//
 //    @Override
 //    public void init(FilterConfig filterConfig) throws ServletException {
 //        Filter.super.init(filterConfig);
@@ -43,18 +46,25 @@
 //    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException, NullPointerException {
 //        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 //        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+//        logger.info("CustomFilter is Used...." );
 //
 //        try {
 //
 //            String methodUri = httpServletRequest.getRequestURI();
 //
 //            if (methodUri.equalsIgnoreCase(uri)) {
-//                String remoteAddress = request.getRemoteAddr();
-//                String port = String.valueOf(request.getRemotePort());
-//                String ipAndPort = remoteAddress + port;
+//                String ip=null ;
 //
-//                accessList.getAccessHistory().computeIfPresent(ipAndPort, (CounterNumber, targetDate) -> {
-//                    Counter counter = accessList.getAccessHistory().get(ipAndPort);
+//                if (request != null) {
+//                    ip = ((HttpServletRequest) request).getHeader("X-FORWARDED-FOR");
+//                    if (ip == null || "".equals(ip)) {
+//                        ip = request.getRemoteAddr();
+//                    }
+//                }
+//
+//                String finalIp = ip;
+//                accessList.getAccessHistory().computeIfPresent(ip, (CounterNumber, targetDate) -> {
+//                    Counter counter = accessList.getAccessHistory().get(finalIp);
 //
 //                    if ((Calendar.getInstance().getTime().compareTo(counter.getTargetDate()) >= 0 && counter.getNumber() != count))
 //                        counter.setCounter(0, new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000)));
@@ -70,7 +80,7 @@
 //                    return counter;
 //                });
 //
-//                accessList.getAccessHistory().computeIfAbsent(ipAndPort, (counterObj) -> {
+//                accessList.getAccessHistory().computeIfAbsent(ip, (counterObj) -> {
 //                    Counter counter = new Counter();
 //                    counter.setCounter(1, new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000)));
 //                    return counter;
@@ -87,6 +97,11 @@
 //    @Override
 //    public void destroy() {
 //        Filter.super.destroy();
+//    }
+//
+//    @Override
+//    public void display() {
+//        logger.info("CustomFilter is Used...." );
 //    }
 //}
 //
