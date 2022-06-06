@@ -17,6 +17,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.*;
+import org.springframework.stereotype.Component;
 import security.AccessList;
 import security.Counter;
 
@@ -25,8 +26,10 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.Map;
 
+import static redis.clients.jedis.HostAndPort.localhost;
+
 @Configuration
-@EnableRedisRepositories(basePackages = {"Redis.AccessListRepository"," security.AccessList"})
+@EnableRedisRepositories(basePackages = {"Redis.AccessListRepository"," security.AccessList","Redis.FactoryInterface","Redis.FilterSelector","Redis.CustomImpl","Redis.RedisImpl"})
 @PropertySource("classpath:application.properties")
 public class RedisConfig {
 
@@ -44,7 +47,7 @@ public class RedisConfig {
         return jedisConnectionFactory;
     }
 
-    @Bean(name = "redis1")
+    @Bean("redis1")
     public RedisTemplate<String, Integer> redis1redisTemplate() {
         RedisTemplate<String, Integer> redis1redisTemplate = new RedisTemplate<>();
         redis1redisTemplate.setKeySerializer(new StringRedisSerializer());
@@ -54,9 +57,9 @@ public class RedisConfig {
         redis1redisTemplate.setConnectionFactory(jedisConnectionFactory());
         return redis1redisTemplate;
     }
-    @Bean(name = "redis2")
-    public RedisTemplate<String, Date> redis2redisTemplate() {
-        RedisTemplate<String, Date> redis2redisTemplate = new RedisTemplate<>();
+    @Bean("redis2")
+    public RedisTemplate<String, Integer> redis2redisTemplate() {
+        RedisTemplate<String, Integer> redis2redisTemplate = new RedisTemplate<>();
         redis2redisTemplate.setKeySerializer(new StringRedisSerializer());
         redis2redisTemplate.setHashKeySerializer(new GenericToStringSerializer<String>(String.class));
         redis2redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());

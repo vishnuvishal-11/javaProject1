@@ -1,5 +1,4 @@
 package controller;
-import Redis.RedisService;
 import Service.QueueInterface;
 import ipServices.IPaddress;
 import lombok.SneakyThrows;
@@ -24,8 +23,7 @@ public class Queue {
     @Autowired
     IPaddress ipaddress;
 
-    @Autowired
-    RedisService redisService;
+
 
     Logger logger =  LoggerFactory.getLogger(Queue.class);
 
