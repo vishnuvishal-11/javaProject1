@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+
 import java.util.concurrent.TimeUnit;
+
 @Component("cache")
 @NoArgsConstructor
 public class RedisImpl implements FactoryInterface {
@@ -21,16 +23,16 @@ public class RedisImpl implements FactoryInterface {
     int penalty;
 
     @Autowired
-   @Qualifier("redis1")
-     RedisTemplate<String, Integer> redis1redisTemplate;
+    @Qualifier("redis1")
+    RedisTemplate<String, Integer> redis1redisTemplate;
     @Autowired
     @Qualifier("redis2")
-     RedisTemplate<String, Integer> redis2redisTemplate;
+    RedisTemplate<String, Integer> redis2redisTemplate;
 
     @Override
-    public void filter(String ip) throws Exception {
+    public void filter(String ip)  {
         logger.info("redisFilter is Used....");
-        if (!(redis1redisTemplate.opsForHash().hasKey("AllowedList", ip)) && (!(redis2redisTemplate.opsForHash().hasKey("DeniedList", ip)))) {
+        if (!(redis2redisTemplate.opsForHash().hasKey("DeniedList", ip)) && (!(redis1redisTemplate.opsForHash().hasKey("AllowedList", ip)))) {
             redis1redisTemplate.opsForHash().put("AllowedList", ip, 1);
             redis1redisTemplate.expire("AllowedList", penalty, TimeUnit.MINUTES);
             logger.info("in else..newly inserted");
@@ -39,7 +41,8 @@ public class RedisImpl implements FactoryInterface {
             if ((!(redis2redisTemplate.opsForHash().hasKey("DeniedList", ip))) && (redis1redisTemplate.opsForHash().hasKey("AllowedList", ip))) {
                 int check = (int) redis1redisTemplate.opsForHash().get("AllowedList", ip);
                 check = check + 1;
-                if (check <= 10) {redis1redisTemplate.opsForHash().put("AllowedList", ip, check);
+                if (check <= 10) {
+                    redis1redisTemplate.opsForHash().put("AllowedList", ip, check);
 
                 }
                 if (check == 11) {
@@ -49,8 +52,9 @@ public class RedisImpl implements FactoryInterface {
                     throw new RuntimeException("too much of  input in one minute...");
                 }
             }
+            //TODO:
             if (redis2redisTemplate.opsForHash().hasKey("DeniedList", ip))
-                 throw new RuntimeException("too much of  input in one minute...");
+                throw new RuntimeException("too much of  input in one minute...");
         }
 
     }

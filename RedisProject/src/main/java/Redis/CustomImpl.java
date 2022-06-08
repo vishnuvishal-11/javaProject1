@@ -28,7 +28,7 @@ public class CustomImpl implements FactoryInterface {
 
 
      @Override
-    public void filter(String ip) throws Exception{
+    public void filter(String ip) {
 
         logger.info("CustomFilter is Used...." );
 

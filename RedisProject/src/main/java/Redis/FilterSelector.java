@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import security.AccessList;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +20,7 @@ import java.io.IOException;
 @Service
 public class FilterSelector implements Filter {
 
-    @Value("${dynamic.filter}")
+    @Value("${dynamic.filter:#{custom}}")
     String filter;
 
     Logger logger = LoggerFactory.getLogger(FilterSelector.class);
@@ -37,7 +36,7 @@ public class FilterSelector implements Filter {
 
     @Autowired
     @Qualifier("cache")
-    FactoryInterface factoryInterface2;
+    FactoryInterface factoryInterfaceRedis;
 
 
     @Override
@@ -62,7 +61,7 @@ public class FilterSelector implements Filter {
                     }
                 }
                 if (filter.equalsIgnoreCase("cache"))
-                    factoryInterface2.filter(ip);
+                    factoryInterfaceRedis.filter(ip);
                 else factoryInterface.filter(ip);
             }
 
