@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import security.AccessList;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,11 +18,14 @@ import java.util.concurrent.TimeUnit;
 public class RedisImpl implements FactoryInterface {
     Logger logger = LoggerFactory.getLogger(RedisImpl.class);
 
-    @Value("${Ratelimit.count}")
-    int count;
 
-    @Value("${Ratelimit.penalty.minutes}")
+
+    @Value("${ratelimit.count}")
+    int count ;
+
+    @Value("${ratelimit.penalty.minutes}")
     int penalty;
+
 
     @Autowired
     @Qualifier("redis1")
@@ -52,7 +57,6 @@ public class RedisImpl implements FactoryInterface {
                     throw new RuntimeException("too much of  input in one minute...");
                 }
             }
-            //TODO:
             if (redis2redisTemplate.opsForHash().hasKey("DeniedList", ip))
                 throw new RuntimeException("too much of  input in one minute...");
         }

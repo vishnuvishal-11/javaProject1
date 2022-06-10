@@ -20,14 +20,14 @@ import java.io.IOException;
 @Service
 public class FilterSelector implements Filter {
 
-    @Value("${dynamic.filter:#{custom}}")
+    @Value("${dynamic.filter}")
     String filter;
 
     Logger logger = LoggerFactory.getLogger(FilterSelector.class);
 
     @Autowired
     AccessList accessList;
-    @Value("${services.service}")
+    @Value("${services.service:#{enque}}")
     String uri;
 
     @Autowired

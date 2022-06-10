@@ -1,19 +1,40 @@
 version: '5'
 services:
   app:
-    container_name: spring-redis
-    image: spring-redis:v6
+    container_name: docker-my-spring
+    image: spring-redis:v11
     build: .
+    environment:
+      - RATELIMIT.COUNT=15
+      - RATELIMIT.PENALTY.MINUTES=1
+      - DYNAMIC.FILTER=custom
+      - HOST.PORT=8086
+      - SERVER.PORT=8090
+
+    #    env_file:
+    #      - .env
+    #     environment:
+    #        - RATELIMIT_COUNT=10
+    #        - RATELIMIT_PENALTY_MINUTES=1
+    #        - DYNAMIC_FILTER="cache"
+    #       - APP_PORTS=8082
+    #    ${HOST.PORT}
+    ports:
+      -  "8085:8090"
     links:
       - redis
-    ports:
-      - "8082:8082"
-    volumes:
-      - ~/docker/redis:/redis-service/logs
+
+  #    volumes:
+  #      - ~/docker/redis:/redis-service/logs
   redis:
-    container_name: redis2
+    container_name: redis
     image: redis:latest
     build: ./redis
     hostname: redis
     ports:
       - "6379:6379"
+
+
+#  server:
+#    ports:
+#      - ${APP_PORTS}:8082
