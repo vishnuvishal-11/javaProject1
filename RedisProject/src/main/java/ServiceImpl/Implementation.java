@@ -1,7 +1,9 @@
 package ServiceImpl;
 
 import Service.QueueInterface;
-import controller.Queue;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import controller.QueueClass;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +84,7 @@ public class Implementation<T> implements QueueInterface<T> {
     }
 
     @SneakyThrows
-    public List<String> display() {
+    public String display() {
         int j;
         List<String> list = new ArrayList<>();
         for (j = front; j <= rear; j++) {
@@ -94,7 +96,10 @@ public class Implementation<T> implements QueueInterface<T> {
                 }
             }
         }
-        return   list;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        //return gson.toJson(this);
+        String jsonStr = gson.toJson(list);
+        return   jsonStr;
     }
 
 }

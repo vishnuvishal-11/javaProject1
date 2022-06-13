@@ -1,6 +1,7 @@
 Redis\AccessListRepository.class
 Redis\RedisImpl.class
 security\Counter.class
+controller\RabbitQ.class
 CustomEndpoint\InfoEndpoint.class
 Redis\FactoryInterface.class
 security\AccessList.class
@@ -8,10 +9,13 @@ CustomEndpoint\HealthEndpoint.class
 ipServices\IPadressImpl.class
 Redis\CustomImpl.class
 Service\QueueInterface.class
+rabbitconfig\Config.class
 Redis\FilterSelector.class
 model\UserRequest.class
+controller\CustomQueue.class
 com\example\RedisProject\RedisProjectApplication.class
 ServiceImpl\Implementation.class
 controller\Queue.class
+controller\QueueClass.class
 Redis\RedisConfig.class
 ipServices\IPaddress.class

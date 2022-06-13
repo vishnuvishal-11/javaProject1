@@ -14,7 +14,7 @@ public interface QueueInterface<T> {
 
     T deque();
     T peek();
-    List<String> display();
+    String display();
     int size();
 
 }

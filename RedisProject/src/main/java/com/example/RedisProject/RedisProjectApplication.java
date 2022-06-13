@@ -10,7 +10,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 //import security.RedisFilter;
 //import Redis.FilterSelector;
 
-@SpringBootApplication(scanBasePackages ={"controller","Service.QueueInterface","ServiceImpl","Redis","model","ipServices","security","CustomEndpoint","security.Factory"} )
+@SpringBootApplication(scanBasePackages ={"controller","Service.QueueInterface","ServiceImpl","rabbitconfig","Redis","model","ipServices","security","CustomEndpoint","security.Factory"} )
 @EnableRedisRepositories
 public class RedisProjectApplication {
 public static ConfigurableApplicationContext context;

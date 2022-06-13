@@ -1,31 +1,17 @@
-version: '5'
+version: '3.3'
 services:
   app:
     container_name: docker-my-spring
     image: spring-redis:v11
     build: .
-    environment:
-      - RATELIMIT.COUNT=15
-      - RATELIMIT.PENALTY.MINUTES=1
-      - DYNAMIC.FILTER=custom
-      - HOST.PORT=8086
-      - SERVER.PORT=8090
-
-    #    env_file:
-    #      - .env
-    #     environment:
-    #        - RATELIMIT_COUNT=10
-    #        - RATELIMIT_PENALTY_MINUTES=1
-    #        - DYNAMIC_FILTER="cache"
-    #       - APP_PORTS=8082
-    #    ${HOST.PORT}
+    env_file:
+      - .env
     ports:
-      -  "8085:8090"
+      - "8090:8090"
     links:
       - redis
+      - rabbitmq4
 
-  #    volumes:
-  #      - ~/docker/redis:/redis-service/logs
   redis:
     container_name: redis
     image: redis:latest
@@ -34,7 +20,14 @@ services:
     ports:
       - "6379:6379"
 
+  rabbitmq4:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    image: 'rabbitmq:3.10.5-management-alpine'
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
 
-#  server:
-#    ports:
-#      - ${APP_PORTS}:8082

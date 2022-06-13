@@ -46,13 +46,13 @@ public class RedisImpl implements FactoryInterface {
             if ((!(redis2redisTemplate.opsForHash().hasKey("DeniedList", ip))) && (redis1redisTemplate.opsForHash().hasKey("AllowedList", ip))) {
                 int check = (int) redis1redisTemplate.opsForHash().get("AllowedList", ip);
                 check = check + 1;
-                if (check <= 10) {
+                if (check <= count) {
                     redis1redisTemplate.opsForHash().put("AllowedList", ip, check);
 
                 }
-                if (check == 11) {
+                if (check == count+1) {
                     redis1redisTemplate.opsForHash().delete("AllowedList", ip);
-                    redis2redisTemplate.opsForHash().put("DeniedList", ip, 12);
+                    redis2redisTemplate.opsForHash().put("DeniedList", ip, count+2);
                     redis2redisTemplate.expire("DeniedList", penalty, TimeUnit.MINUTES);
                     throw new RuntimeException("too much of  input in one minute...");
                 }
