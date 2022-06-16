@@ -1,8 +1,8 @@
 version: '3.3'
 services:
-  app:
+  apps:
     container_name: docker-my-spring
-    image: spring-redis:v11
+    image: spring-redis:v2
     build: .
     env_file:
       - .env
@@ -10,7 +10,7 @@ services:
       - "8090:8090"
     links:
       - redis
-      - rabbitmq4
+      - rabbitmq5
 
   redis:
     container_name: redis
@@ -20,9 +20,8 @@ services:
     ports:
       - "6379:6379"
 
-  rabbitmq4:
+  rabbitmq5:
     container_name: rabbitmq
-    hostname: rabbitmq
     image: 'rabbitmq:3.10.5-management-alpine'
     ports:
         - "5672:5672"

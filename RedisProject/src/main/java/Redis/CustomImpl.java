@@ -56,7 +56,7 @@ public class CustomImpl implements FactoryInterface {
         accessList.getAccessHistory().computeIfAbsent(ip, (counterObj) -> {
             Counter counter = new Counter();
             counter.setCounter(1, new Date(Calendar.getInstance().getTimeInMillis() + (penalty * 60 * 1000)));
-            logger.info("value" + counter.getNumber());
+            logger.info("accssed value" + counter.getNumber());
             return counter;
         });
 

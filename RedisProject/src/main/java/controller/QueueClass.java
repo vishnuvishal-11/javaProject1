@@ -7,7 +7,6 @@ import lombok.SneakyThrows;
 import model.UserRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,14 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-import rabbitconfig.Config;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import java.net.UnknownHostException;
-import java.util.*;
 
+import static rabbitconfig.Config.QUEUE;
 @Component
 @RestController
 @RequestMapping("/queue")
@@ -33,20 +28,17 @@ public class QueueClass {
     @Autowired
     IPaddress ipaddress;
     @Value("${dynamic.queue}")
-    String queuestr;
+    String queuestring;
     @Autowired
-            @Qualifier("customq")
-    Queue queuecus;
+    @Qualifier("customq")
+    Queue queuecustom;
     @Autowired
     @Qualifier("rabbitq")
-    Queue queuerab;
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
-    @Autowired
-    private TopicExchange topic;
+    Queue queuerabbit;
     Logger logger =  LoggerFactory.getLogger(QueueClass.class);
 
-
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @GetMapping("/display")
     public String display() {
@@ -57,62 +49,51 @@ public class QueueClass {
 
     @GetMapping("/size")
     public int size() {
+        int size=0;
         logger.trace("Size Method has been Accessed...");
-        return queueInterface.size();
+        if (queuestring.equalsIgnoreCase("rabbit")){
+            size= queuerabbit.size();
+        }
+        else { size=queuecustom.size();
+        }
+
+        return size;
     }
-
-
     @SneakyThrows
     @PostMapping("/enque")
     //  @RateLimiter(name ="dropOnServer")
             public  ResponseEntity<String> enque(@Valid @RequestBody UserRequest userRequest) throws UnknownHostException {
 
         if (!(userRequest.getUserName().equals("null") || userRequest.getDob().equals("null") || userRequest.getLocation().equals("null"))) {
-//
-//            queueInterface.enque(userRequest);
-//            logger.trace("Enque Method has been Accessed...");
-//            logger.trace("Enque Method has been Accessed in rabbitmq...");
-//
-//            rabbitTemplate.convertAndSend(Config.EXCHANGE,Config.ROUTING_KEY, userRequest);
-//            rabbitTemplate.convertAndSend(topic.getName(), "rabbit", userRequest.toString());
-            logger.info(queuestr +" queue is selected");
-            if (queuestr.equalsIgnoreCase("rabbit")){
-                queuerab.enque(userRequest);
-            }
-            else {queuecus.enque(userRequest);
-            }
 
-
+            logger.info(queuestring +" queue is selected");
+            if (queuestring.equalsIgnoreCase("rabbit")){
+                queuerabbit.enque(userRequest);
+            }
+            else {queuecustom.enque(userRequest);
+            }
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             logger.info("Enque Method has been Accessed but Error Occurred...");
             return new ResponseEntity<>("not a valid input", HttpStatus.BAD_REQUEST);
         }
-
     }
-
 
     @DeleteMapping("/deque")
     //   @RateLimiter(name ="removeFromServer")
     public String deque() throws JsonProcessingException {
-        String deletedElement = (String) queueInterface.deque();
-        if (deletedElement == null || deletedElement.isEmpty()) {
-            logger.trace("deque has been Accessed But Queue is Empty...");
-            return "empty queue";
-        } else {
-            logger.trace("deque has been Accessed ...");
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.writeValueAsString(deletedElement);
+        ObjectMapper mapper = new ObjectMapper();
+       // return mapper.writeValueAsString(deque);
+        String deque=null;
+        if (queuestring.equalsIgnoreCase("rabbit")){
+             deque=queuerabbit.deque();
         }
+        else {  deque=queuecustom.deque();
+        }
+        return mapper.writeValueAsString(deque);
 
     }
-//
-//    @GetMapping("/redis")
-//    public Map<Object, Object> map() {
-//
-//      return redisService.display();
-//
-//    }
+
     }
 
 
