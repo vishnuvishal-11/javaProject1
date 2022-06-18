@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.QueueClass;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,10 +17,8 @@ import java.util.List;
 
 @Validated
 @Component
+@Slf4j
 public class Implementation<T> implements QueueInterface<T> {
-
-    Logger logger =  LoggerFactory.getLogger(Implementation.class);
-
     private static int front = -1, rear = -1;
     List<T> arrli;
 

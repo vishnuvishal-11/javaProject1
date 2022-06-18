@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ipServices.IPaddress;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import model.UserRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ import static rabbitconfig.Config.QUEUE;
 @Component
 @RestController
 @RequestMapping("/queue")
+@Slf4j
 public class QueueClass {
     @Autowired
     QueueInterface queueInterface;
@@ -31,26 +33,24 @@ public class QueueClass {
     String queuestring;
     @Autowired
     @Qualifier("customq")
-    Queue queuecustom;
+    QueueSelector queuecustom;
     @Autowired
     @Qualifier("rabbitq")
-    Queue queuerabbit;
-    Logger logger =  LoggerFactory.getLogger(QueueClass.class);
+    QueueSelector queuerabbit;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
     @GetMapping("/display")
     public String display() {
-        logger.trace("trace-ShowOnServer Method has been Accessed..." + logger.isTraceEnabled());
-        logger.debug("debug-ShowOnServer Method has been Accessed..." + logger.isDebugEnabled());
+        log.trace("trace-ShowOnServer Method has been Accessed..." + log.isTraceEnabled());
+        log.debug("debug-ShowOnServer Method has been Accessed..." + log.isDebugEnabled());
         return queueInterface.display();
     }
 
     @GetMapping("/size")
     public int size() {
         int size=0;
-        logger.trace("Size Method has been Accessed...");
         if (queuestring.equalsIgnoreCase("rabbit")){
             size= queuerabbit.size();
         }
@@ -66,7 +66,7 @@ public class QueueClass {
 
         if (!(userRequest.getUserName().equals("null") || userRequest.getDob().equals("null") || userRequest.getLocation().equals("null"))) {
 
-            logger.info(queuestring +" queue is selected");
+
             if (queuestring.equalsIgnoreCase("rabbit")){
                 queuerabbit.enque(userRequest);
             }
@@ -74,7 +74,7 @@ public class QueueClass {
             }
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            logger.info("Enque Method has been Accessed but Error Occurred...");
+            log.info("Enque Method has been Accessed but Error Occurred...");
             return new ResponseEntity<>("not a valid input", HttpStatus.BAD_REQUEST);
         }
     }

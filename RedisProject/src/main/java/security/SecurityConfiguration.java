@@ -1,6 +1,5 @@
 package security;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,13 +8,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import static org.springframework.security.config.Customizer.withDefaults;
-
+@Slf4j
 @Configuration
 public class SecurityConfiguration  {
-    Logger logger =  LoggerFactory.getLogger(SecurityConfiguration.class);
+
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
-        logger.info("in configure 1");
+        log.info("in configure 1");
         UserDetails user = User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("admin")
@@ -30,7 +29,7 @@ public class SecurityConfiguration  {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        logger.info("in configure 3");
+        log.info("in configure 2");
         http.csrf().disable().cors().and().authorizeHttpRequests((authz) -> authz
                 .antMatchers("/queue/size") .hasAnyRole("USER","ADMIN")
         ) .httpBasic(withDefaults());

@@ -1,25 +1,18 @@
 package Redis;
 
 import lombok.NoArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import security.AccessList;
-
 import java.util.concurrent.TimeUnit;
 
 @Component("cache")
 @NoArgsConstructor
+@Slf4j
 public class RedisImpl implements FactoryInterface {
-    Logger logger = LoggerFactory.getLogger(RedisImpl.class);
-
-
-
     @Value("${ratelimit.count}")
     int count ;
 
@@ -36,11 +29,11 @@ public class RedisImpl implements FactoryInterface {
 
     @Override
     public void filter(String ip)  {
-        logger.info("redisFilter is Used....");
+        log.info("redisFilter is Used....");
         if (!(redis2redisTemplate.opsForHash().hasKey("DeniedList", ip)) && (!(redis1redisTemplate.opsForHash().hasKey("AllowedList", ip)))) {
             redis1redisTemplate.opsForHash().put("AllowedList", ip, 1);
             redis1redisTemplate.expire("AllowedList", penalty, TimeUnit.MINUTES);
-            logger.info("in else..newly inserted");
+            log.info("newly inserted");
 
         } else {
             if ((!(redis2redisTemplate.opsForHash().hasKey("DeniedList", ip))) && (redis1redisTemplate.opsForHash().hasKey("AllowedList", ip))) {

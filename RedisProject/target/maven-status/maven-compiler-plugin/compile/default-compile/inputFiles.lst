@@ -1,8 +1,8 @@
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\controller\RabbitQ.java
-C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\controller\Queue.java
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\rabbitconfig\Config.java
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\CustomEndpoint\HealthEndpoint.java
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\security\AccessList.java
+C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\controller\QueueSelector.java
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\rabbitconfig\ChannelClass.java
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\Redis\AccessListRepository.java
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\Redis\FilterSelector.java
@@ -13,6 +13,7 @@ C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\security\MyAccessDeniedHa
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\ipServices\IPaddress.java
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\ServiceImpl\Implementation.java
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\security\SecurityConfiguration.java
+C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\rabbitconfig\Config2.java
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\Redis\FactoryInterface.java
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\com\example\RedisProject\RedisProjectApplication.java
 C:\Users\vishn\IdeaProjects\RedisProject\src\main\java\controller\CustomQueue.java

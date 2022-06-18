@@ -1,5 +1,6 @@
 package Redis;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,31 +19,24 @@ import java.io.IOException;
 
 @Configuration
 @Service
+@Slf4j
 public class FilterSelector implements Filter {
 
     @Value("${dynamic.filter}")
     String filter;
-
-    Logger logger = LoggerFactory.getLogger(FilterSelector.class);
-
-    @Autowired
-    AccessList accessList;
     @Value("${services.service:#{enque}}")
     String uri;
     @Autowired
     @Qualifier("custom")
     FactoryInterface factoryInterface;
-
     @Autowired
     @Qualifier("cache")
     FactoryInterface factoryInterfaceRedis;
-
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         Filter.super.init(filterConfig);
     }
-
     @SneakyThrows
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -63,7 +57,6 @@ public class FilterSelector implements Filter {
                     factoryInterfaceRedis.filter(ip);
                 else factoryInterface.filter(ip);
             }
-
             chain.doFilter(request, response);
         } catch (RuntimeException e) {
             httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());

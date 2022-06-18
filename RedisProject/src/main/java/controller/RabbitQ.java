@@ -1,50 +1,61 @@
 package controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import model.UserRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.mapping.model.Property;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import rabbitconfig.Config;
-
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.Properties;
-
 import static org.springframework.amqp.rabbit.core.RabbitAdmin.QUEUE_MESSAGE_COUNT;
-import static rabbitconfig.Config.QUEUE;
-
+import static rabbitconfig.Config.*;
+@Slf4j
 @Component("rabbitq")
-public class RabbitQ implements  Queue {
+public class RabbitQ implements  QueueSelector {
     @Autowired
     private RabbitTemplate rabbitTemplate;
-   // @Autowired
-    RabbitAdmin rabbitAdmin;
 
-    Logger logger = LoggerFactory.getLogger(RabbitQ.class);
+    private AmqpAdmin rabbitAdmin;
+
+    @Autowired
+    @Qualifier("que")
+    private Queue queue;
+
+    @Autowired
+    private TopicExchange exchange;
+
+    @Autowired
+    private Binding binding;
+
+
 
     @Override
-    public void enque(UserRequest userRequest) {
+    public void enque(UserRequest userRequest) throws IOException {
         rabbitTemplate.convertAndSend(Config.EXCHANGE, Config.ROUTING_KEY, userRequest);
-//        rabbitTemplate.convertAndSend(topic.getName(), "rabbit", userRequest.toString());
-        logger.trace("Enque Method has been Accessed in rabbitmq...");
+        log.info("RabbitQ - Enque Method has been Accessed ...");
     }
 
     @Override
     public String deque() {
         ObjectMapper mapper = new ObjectMapper();
-        Message message = rabbitTemplate.receive(QUEUE);
+//        rabbitAdmin=new RabbitAdmin(rabbitTemplate);
+        Object message = rabbitTemplate.receiveAndConvert(QUEUE);
+        Message msg= rabbitTemplate.receive(QUEUE);
         try {
-            String msg= message.getMessageProperties().toString();
-          // String msg= Arrays.toString(arr);
-            return mapper.writeValueAsString(msg);
+            String body = message.toString();
+            byte[] bytes= msg.getBody();
+            String s = new String(bytes);
+            log.info("payload...: "+s);
+            log.info("RabbitQ - Deque accessed...: ");
+          //  return mapper.writeValueAsString(body);
+            return s;
         } catch (Exception e) {
             return "null";
         }
@@ -52,10 +63,11 @@ public class RabbitQ implements  Queue {
     }
 
     @Override
-    public int size() { rabbitAdmin=new RabbitAdmin(rabbitTemplate);
+    public int size() {
+       rabbitAdmin=new RabbitAdmin(rabbitTemplate);
         Properties property=rabbitAdmin.getQueueProperties(QUEUE);
-            int count = (int) property.get(QUEUE_MESSAGE_COUNT);
-            return count;
+        log.info("RabbitQ - size accessed...: ");
+        return (int) property.get(QUEUE_MESSAGE_COUNT);
 
         }
     }

@@ -2,7 +2,7 @@ version: '3.3'
 services:
   apps:
     container_name: docker-my-spring
-    image: spring-redis:v2
+    image: spring-redis:v3
     build: .
     env_file:
       - .env

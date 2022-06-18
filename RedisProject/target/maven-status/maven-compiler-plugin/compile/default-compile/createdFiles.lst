@@ -1,8 +1,8 @@
 Redis\RedisImpl.class
-rabbitconfig\ChannelClass.class
 CustomEndpoint\InfoEndpoint.class
 security\AccessList.class
 CustomEndpoint\HealthEndpoint.class
+rabbitconfig\Config2.class
 Redis\FilterSelector.class
 model\UserRequest.class
 security\SecurityConfiguration.class
@@ -11,6 +11,7 @@ Redis\RedisConfig.class
 ipServices\IPaddress.class
 Redis\AccessListRepository.class
 security\Counter.class
+controller\QueueSelector.class
 security\MyAccessDeniedHandler.class
 controller\RabbitQ.class
 Redis\FactoryInterface.class
@@ -21,4 +22,3 @@ rabbitconfig\Config.class
 controller\CustomQueue.class
 com\example\RedisProject\RedisProjectApplication.class
 ServiceImpl\Implementation.class
-controller\Queue.class

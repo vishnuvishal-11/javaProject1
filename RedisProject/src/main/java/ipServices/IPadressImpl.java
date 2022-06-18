@@ -1,5 +1,6 @@
 package ipServices;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.EnableCaching;
@@ -9,9 +10,10 @@ import java.util.*;
 
 
 @Component
+@Slf4j
 public class IPadressImpl implements IPaddress {
     static Set<String> set=new TreeSet<>();
-    Logger logger = LoggerFactory.getLogger(IPadressImpl.class);
+
 
 
     @SneakyThrows
