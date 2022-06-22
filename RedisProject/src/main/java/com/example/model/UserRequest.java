@@ -9,8 +9,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.time.LocalDate;
-
 
 
 @Getter
@@ -25,7 +23,7 @@ import java.time.LocalDate;
 public class UserRequest implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "sequence")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotEmpty
@@ -36,9 +34,10 @@ public class UserRequest implements Serializable {
     int age = 0;
 
     @NotEmpty
-    LocalDate dob;
+    String dob;
 
-    public UserRequest(String userName, int age, LocalDate dob, @NonNull String location, int year, int month, int day) {
+
+    public UserRequest(String userName, int age, String dob, @NonNull String location) {
         this.userName = userName;
         this.age = age;
         this.dob = dob;
@@ -61,20 +60,7 @@ public class UserRequest implements Serializable {
     }
 
 
-
-//
-//    @Override
-//    public String toString() {
-//        return "userName:" + userName + " " +
-//                " age:" +
-//                age +
-//                " dob:" + dob +
-//                "" + " location:" + location +
-//                "";
-//    }
-
-
-    public void set(String userName, int age, LocalDate dob, String location) {
+    public void set(String userName, int age, String dob, String location) {
         this.userName = userName;
         this.age = age;
         this.dob = dob;

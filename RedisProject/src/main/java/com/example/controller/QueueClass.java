@@ -1,10 +1,9 @@
 package com.example.controller;
-
 import com.example.Repository.UserRequestRepository;
 import com.example.Service.QueueInterface;
 import com.example.model.Converter;
 import com.example.ipServices.IPaddress;
-import com.example.model.UserRequestDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import com.example.model.UserRequest;
@@ -16,11 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -70,9 +66,9 @@ public class QueueClass {
 
     @PostMapping("/enque")
     @SneakyThrows
+    @JsonIgnore(value = true)
     public ResponseEntity<String> enque(@Valid @RequestBody com.example.model.UserRequestDto userRequestDto) {
-
-        if (!(userRequestDto.getFirstName().equals("null")  || userRequestDto.getLocation().equals("null"))) {
+        if (converter.checkDateAndName(userRequestDto)) {
             UserRequest userRequest= converter.dtoToEntity(userRequestDto);
             if (queuestring.equalsIgnoreCase("rabbit")) {
 

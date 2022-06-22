@@ -1,10 +1,11 @@
 package com.example.model;
-
 import lombok.*;
 
+
+import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Calendar;
 
 @NoArgsConstructor
 @Getter
@@ -14,14 +15,26 @@ public class UserRequestDto implements Serializable {
 
 
     @NotEmpty
+    @Id
     private String firstName;
     @NotEmpty
     private String lastName;
-
+    @NotEmpty
+    @NotNull(message = "loc cannot be null")
+    private String location;
+    @Min(1700)
+    int year;
+    @Max(12)
+    @Min(1)
+    int month;
+    @Max(31)
+    @Min(1)
+    int day;
     private int age = 0;
 
+    Calendar dob;
 
-
+    private Long id;
 
     @Override
     public String toString() {
@@ -29,12 +42,11 @@ public class UserRequestDto implements Serializable {
                 ", FirstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                ", dob=" + dob +
                 ", location='" + location + '\'' +
                 '}';
     }
 
-    private LocalDate dob;
+
 
     public int getDay() {
         return day;
@@ -56,28 +68,24 @@ public class UserRequestDto implements Serializable {
         this.lastName = lastName;
     }
 
-    @NotEmpty
-    @NotNull(message = "loc cannot be null")
-    private String location;
 
-    @Max(31)
-    int day;
-
-    public UserRequestDto( String firstName,String lastName, int age, LocalDate dob, String location, int day, int year, int month) {
+    public UserRequestDto(String firstName,String lastName, String location,  int year, int month,int day, int age, Calendar dob) {
         this.firstName = firstName;
         this.lastName=lastName;
         this.age = age;
-        this.dob = dob;
         this.location = location;
         this.day = day;
         this.year = year;
         this.month = month;
     }
+    public UserRequestDto(Long id,String firstName,String lastName,  int age, @NotEmpty Calendar dob, String location) {
+        this.id=id;
+        this.firstName = firstName;
+        this.lastName=lastName;
+        this.age=age;
+        this.dob=dob;
+        this.location = location;
 
-    @Min(1700)
-    int year;
-    @Max(12)
-    int month;
-
+    }
 
 }

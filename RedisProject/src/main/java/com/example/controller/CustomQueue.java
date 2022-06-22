@@ -30,7 +30,8 @@ public class CustomQueue implements QueueSelector {
     }
 
     @Override
-    public int size() { log.info(" customQ - size has been Accessed ...");
+    public int size() {
+        log.info(" customQ - size has been Accessed ...");
         return queueInterface.size();
     }
 }

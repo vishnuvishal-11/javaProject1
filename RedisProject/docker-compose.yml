@@ -11,6 +11,9 @@ services:
     links:
       - redis
       - rabbitmq5
+      - h2
+    volumes:
+      - C:\Users\vishn\IdeaProjects\RedisProject\logs:/log
 
   redis:
     container_name: redis
@@ -29,4 +32,16 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: "guest"
       RABBITMQ_DEFAULT_PASS: "guest"
+
+  h2:
+    container_name: H2-DB
+    image: oscarfonts/h2:latest
+    ports:
+      - "1521:1521"
+      - "81:81"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:h2:tcp://localhost:1521/test"
+      SPRING_DATASOURCE_USERNAME: "admin"
+      SPRING_DATASOURCE_PASSWORD:  "admin"
+
 
