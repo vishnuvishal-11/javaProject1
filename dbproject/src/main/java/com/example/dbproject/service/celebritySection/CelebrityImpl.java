@@ -26,7 +26,6 @@ public class CelebrityImpl<T> implements CelebrityInterface<T> {
 
         Celebrity celebrity = new Celebrity(CelebrityDto.getName(), CelebrityDto.getAbout(), CelebrityDto.getLanguages_known(),
                 CelebrityDto.getGender(), CelebrityDto.getDob(), CelebrityDto.getDebut(), CelebrityDto.getTags());
-
         int index = CelebrityDto.getPlans().size();
 
         for (int i = 0; i < index; i++) {

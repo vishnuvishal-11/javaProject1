@@ -1,10 +1,8 @@
-package com.example.dbproject.dao.celebritySection;
+package com.example.dbproject.dao.UserSection;
 
-import org.springframework.stereotype.Component;
 import java.util.List;
 
-@Component
-public interface CelebrityDAO<T> {
+public interface UserDAO<T> {
 
     Long save(T obj);
 

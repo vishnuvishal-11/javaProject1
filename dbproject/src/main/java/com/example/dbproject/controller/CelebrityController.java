@@ -26,7 +26,7 @@ CelebrityInterface celebrityInterface;
     public List<?> readAll() {
         return celebrityInterface.getAll();
     }
-    
+
 
     @PostMapping("/post")
     public ResponseEntity create(@RequestBody CelebrityDto CelebrityDto) {
