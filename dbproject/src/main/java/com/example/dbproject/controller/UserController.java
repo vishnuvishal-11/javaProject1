@@ -1,7 +1,7 @@
 package com.example.dbproject.controller;
 
-import com.example.dbproject.dto.userSection.UserDto;
-import com.example.dbproject.service.userSection.UserInterface;
+import com.example.dbproject.dto.user.UserDto;
+import com.example.dbproject.service.user.UserInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,6 @@ public class UserController {
     @PostMapping("/post")
     public ResponseEntity create(@RequestBody UserDto userDto) {
         try {
-            log.info(""+userDto);
             return new ResponseEntity<>("" + userInterface.save(userDto), HttpStatus.ACCEPTED);
         } catch (EntityNotFoundException | ParseException e) {
             return new ResponseEntity<>("not a valid input", HttpStatus.BAD_REQUEST);

@@ -1,6 +1,6 @@
 package com.example.dbproject.controller;
 
-import com.example.dbproject.service.celebritySection.CelebrityInterface;
+import com.example.dbproject.service.celebrity.CelebrityInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import com.example.dbproject.dto.celebritySection.CelebrityDto;
+import com.example.dbproject.dto.celebrity.CelebrityDto;
 
 @RestController
 @RequestMapping("/celebrity")

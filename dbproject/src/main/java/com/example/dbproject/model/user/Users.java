@@ -1,13 +1,20 @@
-package com.example.dbproject.model.userSection;
+package com.example.dbproject.model.user;
 
+import com.example.dbproject.model.user.CardDetails;
+import com.example.dbproject.model.user.TringMembership;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name ="users" )
@@ -23,7 +30,6 @@ public class Users implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
-
     @Column(name = "email", nullable = false,unique = true)
     private String email;
 
@@ -36,15 +42,14 @@ public class Users implements Serializable {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @OneToMany(targetEntity = Card_details.class, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(targetEntity = CardDetails.class, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_fk", referencedColumnName = "user_id")
-    private List<Card_details> card_details = new ArrayList<>();
+    private List<CardDetails> card_details = new ArrayList<>();
 
-
-    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
-    private Tring_membership tring_membership;
-
+    @LazyToOne( LazyToOneOption.NO_PROXY )
+    private TringMembership tring_membership;
 
     public Users(String name, String password, String email, String invite_code, String referred_code, String status) {
         this.name = name;
@@ -53,5 +58,6 @@ public class Users implements Serializable {
         this.invite_code = invite_code;
         this.referred_code = referred_code;
         this.status = status;
+
     }
 }
