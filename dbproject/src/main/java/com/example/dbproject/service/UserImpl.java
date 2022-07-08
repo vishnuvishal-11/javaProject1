@@ -110,8 +110,3 @@ public class UserImpl implements User {
     }
 }
 
-
-//,
-//    "valid_till": "2018-04-28T14:45:15",
-//    "created_at":"2016-04-28T14:45:15",
-//    "membership_status":true

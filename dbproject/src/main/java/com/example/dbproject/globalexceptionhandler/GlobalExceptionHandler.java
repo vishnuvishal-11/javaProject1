@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import javax.persistence.EntityNotFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
@@ -45,12 +44,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = PropertyReferenceException.class)
     public ResponseEntity<String> handlePropertyException() {
         return new ResponseEntity<String>("No such property exists..", HttpStatus.BAD_REQUEST);
-//        return new ResponseEntity<String>("No such property exists..try with->"+ Arrays.toString(Celebrity.class.getDeclaredFields())
-//                .replaceAll(" private java.lang.String com.example.dbproject.model.Celebrity.","")
-//                .replaceAll("private java.lang.Long com.example.dbproject.model.Celebrity.","")
-//                        .replaceAll(" private java.util.List com.example.dbproject.model.Celebrity.","")
-//                .replaceAll("private java.util.Date com.example.dbproject.model.Celebrity.",""),
-//                HttpStatus.BAD_REQUEST);
     }
     @Override
     @ResponseStatus(HttpStatus.NOT_FOUND)

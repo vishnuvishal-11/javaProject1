@@ -29,14 +29,6 @@ public class CelebrityImpl implements Celebrities {
     @Autowired
     private CelebrityConverter converter;
 
-//        @PostConstruct
-//    public void initDB() {
-//            List langs=new ArrayList(Collections.singleton("englisg,tamil,hindi"));
-//        List<CelebrityDto> celebrities = IntStream.rangeClosed(2, 10)
-//                .mapToObj(i -> new CelebrityDto("celebrity_" + i,"about celebrity_" + i,langs, new Random().nextInt(10), new Random().nextInt(50000)))
-//                .collect(Collectors.toList());
-//         //   celebrityRepository.saveAll(products);
-//    }
 
     @Override
     public Long save(CelebrityDto celebrityDto) {
@@ -99,32 +91,18 @@ public class CelebrityImpl implements Celebrities {
         return converter.convertpageToDto(celebrityRepository.findAll(PageRequest.of(offset, pagesize).withSort(Sort.by(Sort.Direction.ASC,field))));
         else{
             CelebritySpecificationsBuilder builder = new CelebritySpecificationsBuilder();
-            String operationSetExpert = Joiner.on("|").join(SearchOperation.SIMPLE_OPERATION_SET);
-            Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExpert + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?),");
+
+            String operationSetExpert = Joiner.on("|")
+                    .join(SearchOperation.SIMPLE_OPERATION_SET);
+            Pattern pattern = Pattern.compile("(\\p{Punct}?)(\\w+?)(" + operationSetExpert
+                            + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?),");
             Matcher matcher = pattern.matcher(search + ",");
-            while (matcher.find()) {
-                builder.with(
-                        matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
+            while (matcher.find()) {builder.with(matcher.group(1), matcher.group(2), matcher.group(3),
+                        matcher.group(5), matcher.group(4), matcher.group(6));
             }
-            Specification<Celebrity> spec = builder.build();
+
+            Specification<Celebrity> spec =  builder.build();
          return converter.convertpageToDto(celebrityRepository.findAll(spec,PageRequest.of(offset, pagesize).withSort(Sort.by(Sort.Direction.ASC,field))));
-//        else  return converter.convertListToDto(celebrityRepository.getReferencesByTags(name));
-      //  else return converter.convertListToDto(celebrityRepository.getAllList(name,celebrity_id,tags));
     }}
 
-    @Override
-    public List<CelebrityDto> findProductsWithSorting(String field) {
-        return converter.convertListToDto(celebrityRepository.findAll(Sort.by(Sort.Direction.ASC, field)));
-    }
-
-    @Override
-    public Page<CelebrityDto> findProductsWithPagination(int offset, int pageSize) {
-        return converter.convertpageToDto(celebrityRepository.findAll(PageRequest.of(offset, pageSize)));
-    }
-
-    @Override
-    public Page<CelebrityDto> findProductsWithPaginationWithSort(int offset, int pageSize,String field) {
-        return     converter.convertpageToDto(celebrityRepository.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(Sort.Direction.ASC,field))));
-
-    }
 }

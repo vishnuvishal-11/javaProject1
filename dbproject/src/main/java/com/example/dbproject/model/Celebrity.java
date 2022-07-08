@@ -30,13 +30,13 @@ public class Celebrity implements Serializable {
     @NonNull
     private String name;
 
-    @Column(name = "first_name", nullable = false)
-    @NonNull
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false)
-    @NonNull
-    private String lastName;
+//    @Column(name = "first_name", nullable = false)
+//    @NonNull
+//    private String firstName;
+//
+//    @Column(name = "last_name", nullable = false)
+//    @NonNull
+//    private String lastName;
 
     @Column(name = "about", nullable = false)
     @NonNull
@@ -115,16 +115,6 @@ public class Celebrity implements Serializable {
         this.marital_status = marital_status;
     }
 
-    public void SetCelebrity(String name, String about, List<String> languages_known, String gender, Date dob, String debut, List<String> tags) {
-        this.name = name;
-        this.about = about;
-        this.languages_known = languages_known;
-        this.gender = gender;
-        this.dob = dob;
-        this.debut = debut;
-        this.tags = tags;
-    }
+
 
 }
-
-//https://stackoverflow.com/questions/42918348/postgresql-json-like-query

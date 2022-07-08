@@ -20,37 +20,27 @@ import javax.persistence.EntityNotFoundException;
 @Validated
 public class CelebrityController {
     @Autowired
-    Celebrities celebrityInterface;
+    Celebrities celebrity;
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CelebrityDto read(@PathVariable Long id) {
-       return celebrityInterface.get(id);
+       return celebrity.get(id);
     }
 
     @GetMapping("/")
     public Page<CelebrityDto> readAll(@RequestParam(value ="search" ,required = false) String search,@RequestParam(value = "offset",required = false,defaultValue = "0") int offset,
-                                      @RequestParam(value = "pagesize",required = false,defaultValue = "5") int pageSize, @RequestParam(value = "field",required = false,defaultValue = "id")String field) {
-//        CelebritySpecificationsBuilder builder = new CelebritySpecificationsBuilder();
-//        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
-//        Matcher matcher = pattern.matcher(search + ",");
-//        while (matcher.find()) {
-//            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
-//        }
-//
-//        Specification<Celebrity> spec = builder.build();
-//    public List<CelebrityDto> readAll(@RequestParam(required = false) String celebrity_name,
-//                          @RequestParam(required = false) String celebrity_id,@RequestParam(required = false) String tags) {
-        return celebrityInterface.getAll(search,offset,pageSize,field);
+            @RequestParam(value = "pagesize",required = false,defaultValue = "5") int pageSize, @RequestParam(value = "field",required = false,defaultValue = "id")String field) {
+        return celebrity.getAll(search,offset,pageSize,field);
     }
 
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public Long create(@Valid @RequestBody CelebrityDto CelebrityDto) {
-        Long id = celebrityInterface.save(CelebrityDto);
+        Long id = celebrity.save(CelebrityDto);
         if (id != null) return id;
-        else
+             else
             throw new EntityNotFoundException("wrong input..");
 
     }
@@ -58,32 +48,14 @@ public class CelebrityController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
-        celebrityInterface.delete(id);
+        celebrity.delete(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public CelebrityDto update(@RequestBody CelebrityDto CelebrityDto, @PathVariable Long id) {
-        return (CelebrityDto) celebrityInterface.update(CelebrityDto, id);
+        return (CelebrityDto) celebrity.update(CelebrityDto, id);
     }
 
-    @GetMapping("sort/{field}")
-    @ResponseStatus(HttpStatus.OK)
-    private List<CelebrityDto> getCelebritiesWithSort(@PathVariable String field) throws PropertyReferenceException {
-        return celebrityInterface.findProductsWithSorting(field);
 
-    }
-
-//    @GetMapping("/pagination/{offset}/{pageSize}")
-//    @ResponseStatus(HttpStatus.PARTIAL_CONTENT)
-//    private Page<CelebrityDto> getCelebritiesWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
-//        return celebrityInterface.findProductsWithPagination(offset, pageSize);
-//
-//    }
-    @GetMapping("/pagination/{offset}/{pageSize}/{field}")
-    @ResponseStatus(HttpStatus.PARTIAL_CONTENT)
-    private Page<CelebrityDto> getCelebritiesWithPaginationAndSort(@PathVariable int offset, @PathVariable int pageSize, @PathVariable String field) {
-        return celebrityInterface.findProductsWithPaginationWithSort(offset, pageSize, field);
-
-    }
 }

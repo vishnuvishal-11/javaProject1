@@ -18,12 +18,56 @@ public class DbprojectApplication {
         SpringApplication.run(DbprojectApplication.class, args);
     }
 
-    //    @PostConstruct
-//    public void initDB() {
-//        List<Product> products = IntStream.rangeClosed(1, 200)
-//                .mapToObj(i -> new Product("product" + i, new Random().nextInt(100), new Random().nextInt(50000)))
-//                .collect(Collectors.toList());
-//        repository.saveAll(products);
-//    }
+
 
 }
+
+
+//sample inputs
+/*
+* {
+    "name": "user1",
+    "about": "about vivek",
+    "languages_known": [
+        "english",
+        "hindi",
+        "tamil"
+    ],
+    "gender": "male",
+    "dob": "2019-04-28T14:45:15",
+    "debut": "vs Pakistan at karachi",
+    "tags": [
+        "#Actor",
+        "#fitness",
+        "#BigBoss"
+    ],
+    "plans": [
+        {
+            "type": "insta_dm",
+            "price": 20000
+        },
+        {
+            "type": "recorded_video",
+            "price": 10000
+        }
+    ],
+    "qualification":"Engineering in cs",
+    "birth_place": "chennai",
+    "fb_id":"user fb_id",
+    "insta_id":"user insta_id",
+    "marital_status":"single"
+
+
+}
+*
+* sample postman query searches..../.....
+*
+* 1=> http://localhost:8082/celebrity/?search=qualification:lawyer,'marital_status:single,marital_status:married
+* 2=> http://localhost:8082/celebrity/?search=qualification!lawyer,marital_status!single
+*3=> http://localhost:8082/celebrity/?search=marital_status:single&offset=0&pagesize=6&field=id
+*
+*  negation is !  used in 2
+* for or use '  and for and use comma without anything
+* use : for equal
+* can use () is necessary
+*  */
