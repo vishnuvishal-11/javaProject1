@@ -8,14 +8,22 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages ={"com.example.dbproject.*", "com.example.dbproject.controller","com.example.dbproject.repository" ,"com.example.dbproject.model","com.example.dbproject.service","com.example.dbproject.CelebrityDto"})
-@EnableJpaRepositories(basePackages="com.example.dbproject.repository")
+@SpringBootApplication(scanBasePackages = {"com.example.dbproject.*", "com.example.dbproject.controller", "com.example.dbproject.repository", "com.example.dbproject.model", "com.example.dbproject.service", "com.example.dbproject.CelebrityDto"})
+@EnableJpaRepositories(basePackages = "com.example.dbproject.repository")
 @EnableAutoConfiguration
-@EntityScan(basePackages="com.example.dbproject.model")
+@EntityScan(basePackages = "com.example.dbproject.model")
 public class DbprojectApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DbprojectApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DbprojectApplication.class, args);
+    }
+
+    //    @PostConstruct
+//    public void initDB() {
+//        List<Product> products = IntStream.rangeClosed(1, 200)
+//                .mapToObj(i -> new Product("product" + i, new Random().nextInt(100), new Random().nextInt(50000)))
+//                .collect(Collectors.toList());
+//        repository.saveAll(products);
+//    }
 
 }
