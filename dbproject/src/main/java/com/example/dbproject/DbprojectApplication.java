@@ -7,11 +7,15 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@SpringBootApplication(scanBasePackages = {"com.example.dbproject.*", "com.example.dbproject.controller", "com.example.dbproject.repository", "com.example.dbproject.model", "com.example.dbproject.service", "com.example.dbproject.CelebrityDto"})
+@SpringBootApplication(scanBasePackages = {"com.example.dbproject.*", "com.example.dbproject.controller", "com.example.dbproject.repository", "com.example.dbproject.model", "com.example.dbproject.service", "com.example.dbproject.CelebrityDto","com.example.dbproject.swagger"})
 @EnableJpaRepositories(basePackages = "com.example.dbproject.repository")
 @EnableAutoConfiguration
 @EntityScan(basePackages = "com.example.dbproject.model")
+//@EnableSwagger2
+//@EnableWebMvc
 public class DbprojectApplication {
 
     public static void main(String[] args) {

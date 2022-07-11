@@ -1,9 +1,9 @@
 package com.example.dbproject.specifications;
 
 public enum SearchOperation {
-    EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE, STARTS_WITH, ENDS_WITH, CONTAINS;
+    EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE, STARTS_WITH, ENDS_WITH, CONTAINS,JSONTYPE;
 
-    public static final String[] SIMPLE_OPERATION_SET = { ":", "!", ">", "<", "~" };
+    public static final String[] SIMPLE_OPERATION_SET = { ":", "!", ">", "<", "~","|" };
 
     public static final String OR_PREDICATE_FLAG = "'";
 
@@ -29,6 +29,8 @@ public enum SearchOperation {
                 return LESS_THAN;
             case '~':
                 return LIKE;
+            case '|':
+                return JSONTYPE;
             default:
                 return null;
         }
