@@ -1,10 +1,12 @@
 package com.example.dbproject.globalexceptionhandler;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -44,6 +46,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = PropertyReferenceException.class)
     public ResponseEntity<String> handlePropertyException() {
         return new ResponseEntity<String>("No such property exists..", HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(value = BadCredentialsException.class)
+    public ResponseEntity<String> handleCredentialException() {
+        return new ResponseEntity<String>("Bad credentials .. recheck the inputs..", HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(value = ExpiredJwtException.class)
+    public ResponseEntity<String> handleJWTException() {
+        return new ResponseEntity<String>("Jwt Token got expired..", HttpStatus.BAD_REQUEST);
     }
     @Override
     @ResponseStatus(HttpStatus.NOT_FOUND)

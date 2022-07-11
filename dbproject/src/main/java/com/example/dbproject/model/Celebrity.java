@@ -3,6 +3,7 @@ package com.example.dbproject.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.*;
 import org.springframework.lang.NonNull;
@@ -28,6 +29,7 @@ public class Celebrity implements Serializable {
 
     @Column(name = "celebrity_name", nullable = false)
     @NonNull
+    @ApiModelProperty(value = " name of the celebrity", name = "celebrity_name", dataType = "String", example = "sachin Tendulkar")
     private String name;
 
 //    @Column(name = "first_name", nullable = false)
