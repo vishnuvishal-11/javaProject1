@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>18</java.version>
 		<jaxb.version>2.4.0-b180830.0359</jaxb.version>
+<!--		<liquibase.propertyFile>${project.basedir}/application.properties</liquibase.propertyFile>-->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -176,10 +177,33 @@
 					<groupId>org.liquibase</groupId>
 					<artifactId>liquibase-maven-plugin</artifactId>
 					<version>3.4.1</version>
+<!--					<configuration>-->
+<!--						<propertyFile>src/main/resources/liquibase.properties</propertyFile>-->
+<!--					</configuration>-->
 					<configuration>
-						<propertyFile>src/main/resources/application.properties</propertyFile>
-						<propertyFileWillOverride>true</propertyFileWillOverride>
-					</configuration>
+					<propertyFileWillOverride>true</propertyFileWillOverride>
+					<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+					<changeLogFile>db/changeLog/db.changelog-master.xml</changeLogFile>
+					<propertyFile>liquibase.properties</propertyFile></configuration>
+					<dependencies>
+						<!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-maven-plugin -->
+						<dependency>
+							<groupId>org.liquibase</groupId>
+							<artifactId>liquibase-maven-plugin</artifactId>
+							<version>3.4.1</version>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-beans</artifactId>
+							<version>5.3.21</version>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework.data</groupId>
+							<artifactId>spring-data-jpa</artifactId>
+							<version>2.7.1</version>
+						</dependency>
+
+					</dependencies>
 				</plugin>
 
 

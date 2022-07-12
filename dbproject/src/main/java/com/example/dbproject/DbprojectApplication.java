@@ -1,28 +1,73 @@
 package com.example.dbproject;
 
+import liquibase.integration.spring.SpringLiquibase;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.sql.DataSource;
+
+import static org.springframework.orm.hibernate5.SessionFactoryUtils.getDataSource;
+
 @SpringBootApplication(scanBasePackages = {"com.example.dbproject.*", "com.example.dbproject.controller", "com.example.dbproject.repository", "com.example.dbproject.model", "com.example.dbproject.service", "com.example.dbproject.CelebrityDto","com.example.dbproject.swagger"})
 @EnableJpaRepositories(basePackages = "com.example.dbproject.repository")
-@EnableAutoConfiguration
 @EntityScan(basePackages = "com.example.dbproject.model")
-//@EnableSwagger2
+@EnableAutoConfiguration//(exclude = LiquibaseAutoConfiguration.class)
+@Slf4j
 //@EnableWebMvc
 public class DbprojectApplication {
+    @Autowired
+    private Environment env;
 
     public static void main(String[] args) {
         SpringApplication.run(DbprojectApplication.class, args);
     }
 
+    @Bean
+    public SpringLiquibase liquibase() {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("classpath:/db/changeLog/db.changelog-master.xml");
+        log.info("cl: "+liquibase.getChangeLog());
+        liquibase.setDataSource(dataSource());
+        return liquibase;
+    }
 
+
+
+    @Bean
+    public LiquibaseProperties liquibaseProperties() {
+        return new LiquibaseProperties();
+    }
+    @Bean
+    public DataSource dataSource() {
+        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
+        dataSource.setUrl(env.getProperty("spring.datasource.url"));
+        dataSource.setUsername(env.getProperty("spring.datasource.username"));
+        dataSource.setPassword(env.getProperty("spring.datasource.password"));
+        dataSource.setSchema("public");
+        log.info("env: "+env.getProperty("spring.datasource.driver-class-name"));
+        log.info("un: "+dataSource.getUsername());
+        log.info("catalog: "+dataSource.getCatalog());
+        log.info("url: "+dataSource.getUrl());
+        log.info("password: "+dataSource.getPassword());
+        log.info("schema: "+dataSource.getSchema());
+        return dataSource;
+    }
 
 }
 

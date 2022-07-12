@@ -10,6 +10,7 @@ import org.springframework.lang.NonNull;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.*;
 
@@ -19,6 +20,7 @@ import java.util.*;
 @NoArgsConstructor
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@Table(name = "celebrity")
 public class Celebrity implements Serializable {
 
     @Id
@@ -36,7 +38,7 @@ public class Celebrity implements Serializable {
 //    @NonNull
 //    private String firstName;
 //
-//    @Column(name = "last_name", nullable = false)
+//    @Column(name = "last_name")
 //    @NonNull
 //    private String lastName;
 

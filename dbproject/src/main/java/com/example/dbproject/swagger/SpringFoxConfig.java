@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.config.annotation.*;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
@@ -38,7 +39,7 @@ import static org.springframework.boot.actuate.trace.http.Include.AUTHORIZATION_
 @EnableWebMvc
 @Import({BeanValidatorPluginsConfiguration.class})
 public class SpringFoxConfig implements WebMvcConfigurer {
-
+    InMemoryUserDetailsManager inMemoryUserDetailsManager;
 //    public SpringFoxConfig() {
 //    }
 public static final String AUTHORIZATION_HEADER = "Authorization";
@@ -50,8 +51,8 @@ public static final String AUTHORIZATION_HEADER = "Authorization";
                .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
-//                .securityContexts(Arrays.asList(securityContext()))
-//                .securitySchemes(Arrays.asList(apiKey())) 
+                .securityContexts(Arrays.asList(securityContext()))
+                .securitySchemes(Arrays.asList(apiKey()))
                 .useDefaultResponseMessages(true)
                         .globalResponses(HttpMethod.GET, newArrayList(
                                 new ResponseBuilder().code("500")
@@ -91,22 +92,22 @@ public static final String AUTHORIZATION_HEADER = "Authorization";
         return webEndpointProperties.getDiscovery().isEnabled() && (StringUtils.hasText(basePath) || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
     }
 
-//    private ApiKey apiKey() {
-//        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
-//    }
-//
-//    private SecurityContext securityContext() {
-//        return SecurityContext.builder()
-//                .securityReferences(defaultAuth())
-//                .build();
-//    }
-//
-//    List<SecurityReference> defaultAuth() {
-//        AuthorizationScope authorizationScope
-//                = new AuthorizationScope("global", "accessEverything");
-//        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-//        authorizationScopes[0] = authorizationScope;
-//        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
-//    }
+    private ApiKey apiKey() {
+        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .build();
+    }
+
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope
+                = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
+    }
 
 }

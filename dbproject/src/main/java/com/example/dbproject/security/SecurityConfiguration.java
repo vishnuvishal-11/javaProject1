@@ -38,20 +38,24 @@ public class SecurityConfiguration  {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable().cors().and().authorizeHttpRequests((authz) -> authz .regexMatchers("user/")
+                        .hasAnyRole("USER","CELEBRITY")
+                ).exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .httpBasic(withDefaults());
+        http.csrf().disable().cors().and()
+                .authorizeHttpRequests((authz) -> authz
+                        .anyRequest().hasAnyRole("ADMIN","SUPER_ADMIN")
+                ).exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .httpBasic(withDefaults());
+
 //        log.info("in configure 2");
 //        http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll().
 //                anyRequest().authenticated().and().
 //                exceptionHandling().and().sessionManagement()
 //                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.csrf().disable().cors().and().authorizeHttpRequests((authz) -> authz
-                .antMatchers("/user*/*").hasRole("USER")
-        ).exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .httpBasic(withDefaults());
-        http.csrf().disable().cors().and()
-                .authorizeHttpRequests((authz) -> authz
-                        .anyRequest().hasRole("ADMIN")
-                ).exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .httpBasic(withDefaults());
+
+
+
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

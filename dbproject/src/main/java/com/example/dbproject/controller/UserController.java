@@ -83,18 +83,18 @@ public class UserController {
         }
 }
 
-    @PostMapping(value = "/authenticate",produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ApiOperation(value = "creation of JWT token", notes = "This method creates a jwt token  for the user")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws BadCredentialsException, ExpiredJwtException {
-        if(inMemoryUserDetailsManager.userExists(authenticationRequest.getUsername()))
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
-            );
-        else
-            return  null;
-        final UserDetails userDetails = inMemoryUserDetailsManager.loadUserByUsername(authenticationRequest.getUsername());
-        final String jwt = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.accepted().body(new AuthenticationResponse(jwt));
-    }
+//    @PostMapping(value = "/authenticate",produces = {MediaType.APPLICATION_JSON_VALUE})
+//    @ApiOperation(value = "creation of JWT token", notes = "This method creates a jwt token  for the user")
+//    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws BadCredentialsException, ExpiredJwtException {
+//        if(inMemoryUserDetailsManager.userExists(authenticationRequest.getUsername()))
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
+//            );
+//        else
+//            return  null;
+//        final UserDetails userDetails = inMemoryUserDetailsManager.loadUserByUsername(authenticationRequest.getUsername());
+//        final String jwt = jwtTokenUtil.generateToken(userDetails);
+//        return ResponseEntity.accepted().body(new AuthenticationResponse(jwt));
+//    }
 
 }
