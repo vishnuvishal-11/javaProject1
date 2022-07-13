@@ -8,6 +8,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -47,8 +48,9 @@ public class UserController {
     @GetMapping(value = "/",produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     @ApiOperation(value = "Read All users", notes = "This method fetches all  users with pagination of given id")
-    public List<?> readAll() throws ExpiredJwtException {
-        return user.getAll();
+    public Page<UserDto> readAll(@RequestParam(value ="search" ,required = false) String search, @RequestParam(value = "offset",required = false,defaultValue = "0") int offset,
+                                 @RequestParam(value = "pagesize",required = false,defaultValue = "5") int pageSize, @RequestParam(value = "field",required = false,defaultValue = "id")String field) throws ExpiredJwtException {
+        return user.getAll(search,offset,pageSize,field);
     }
 
 

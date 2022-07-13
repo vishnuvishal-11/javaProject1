@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.*;
 import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -29,18 +30,18 @@ public class Celebrity implements Serializable {
     private Long id;
 
 
-    @Column(name = "celebrity_name", nullable = false)
-    @NonNull
-    @ApiModelProperty(value = " name of the celebrity", name = "celebrity_name", dataType = "String", example = "sachin Tendulkar")
-    private String name;
+//    @Column(name = "celebrity_name", nullable = false)
+//    @NonNull
+//    @ApiModelProperty(value = " name of the celebrity", name = "celebrity_name", dataType = "String", example = "sachin Tendulkar")
+//    private String name;
 
-//    @Column(name = "first_name", nullable = false)
-//    @NonNull
-//    private String firstName;
-//
-//    @Column(name = "last_name")
-//    @NonNull
-//    private String lastName;
+    @Column(name = "first_name", nullable = false)
+    @NonNull
+    private String firstName;
+
+    @Column(name = "last_name")
+    @NonNull
+    private String lastName;
 
     @Column(name = "about", nullable = false)
     @NonNull
@@ -93,8 +94,9 @@ public class Celebrity implements Serializable {
     @JoinColumn(name = "celebrity_fk", referencedColumnName = "celebrity_id")
     private List<Price> prices = new ArrayList<>();
 
-    public Celebrity(String name, String about, List<String> languages_known, String gender, Date dob, String debut, List<String> tags) {
-        this.name = name;
+    public Celebrity(String firstName, String lastName, String about, List<String> languages_known, String gender, Date dob, String debut, List<String> tags) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.about = about;
         this.languages_known = languages_known;
         this.gender = gender;
@@ -104,8 +106,9 @@ public class Celebrity implements Serializable {
 
     }
 
-    public Celebrity(String name, String about, List<String> languages_known, String gender, Date dob, List<String> tags, String qualification, String birth_place, String fb_id, String insta_id, String debut, String marital_status) {
-        this.name = name;
+    public Celebrity(String firstName, String lastName, String about, List<String> languages_known, String gender, Date dob, List<String> tags, String qualification, String birth_place, String fb_id, String insta_id, String debut, String marital_status) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.about = about;
         this.languages_known = languages_known;
         this.gender = gender;
@@ -118,7 +121,6 @@ public class Celebrity implements Serializable {
         this.debut = debut;
         this.marital_status = marital_status;
     }
-
 
 
 }

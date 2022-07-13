@@ -1,23 +1,24 @@
 package com.example.dbproject.specifications;
+
 import com.example.dbproject.model.Celebrity;
 import com.example.dbproject.model.Users;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
+
 import java.util.ArrayList;
 import java.util.List;
-@Slf4j
-public class CelebritySpecificationsBuilder {
+
+public class UserSpecificationsBuilder {
 
     private final List<SearchCriteria> params;
 
-    public CelebritySpecificationsBuilder() {
+    public UserSpecificationsBuilder() {
         params = new ArrayList<SearchCriteria>();
     }
-    public final CelebritySpecificationsBuilder with(final String key, final String operation, final Object value, final String prefix, final String suffix) {
+    public final UserSpecificationsBuilder with(final String key, final String operation, final Object value, final String prefix, final String suffix) {
         return with(null, key, operation, value, prefix, suffix);
     }
 
-    public CelebritySpecificationsBuilder with(final String orPredicate, final String key, final String operation, final Object value, final String prefix, final String suffix) {
+    public UserSpecificationsBuilder with(final String orPredicate, final String key, final String operation, final Object value, final String prefix, final String suffix) {
         SearchOperation op = SearchOperation.getSimpleOperation(operation.charAt(0));
         if (op != null) {
             if (op == SearchOperation.EQUALITY) {
@@ -36,26 +37,26 @@ public class CelebritySpecificationsBuilder {
         }
         return this;
     }
-        public Specification<Celebrity> build() {
-            if (params.size() == 0) {
-                return null;
-            }
+    public Specification<Users> build() {
+        if (params.size() == 0) {
+            return null;
+        }
 
-            Specification<Celebrity> result = new CelebritySpecifications(params.get(0));
-            for (int i = 1; i < params.size(); i++) {
-                result = params.get(i).isOrPredicate()
-                        ? Specification.where(result).or(new CelebritySpecifications(params.get(i)))
-                        : Specification.where(result).and(new CelebritySpecifications(params.get(i)));
-            }
-            return  result;
+        Specification<Users> result = new UserSpecifications(params.get(0));
+        for (int i = 1; i < params.size(); i++) {
+            result = params.get(i).isOrPredicate()
+                    ? Specification.where(result).or(new UserSpecifications(params.get(i)))
+                    : Specification.where(result).and(new UserSpecifications(params.get(i)));
+        }
+        return  result;
     }
 
-    public final CelebritySpecificationsBuilder with(CelebritySpecifications spec) {
+    public final UserSpecificationsBuilder with(CelebritySpecifications spec) {
         params.add(spec.getCriteria());
         return this;
     }
 
-    public final CelebritySpecificationsBuilder with(SearchCriteria criteria) {
+    public final UserSpecificationsBuilder with(SearchCriteria criteria) {
         params.add(criteria);
         return this;
     }

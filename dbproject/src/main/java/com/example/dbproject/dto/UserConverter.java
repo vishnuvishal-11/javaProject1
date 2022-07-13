@@ -1,5 +1,6 @@
 package com.example.dbproject.dto;
 
+import com.example.dbproject.model.Celebrity;
 import com.example.dbproject.model.TringMembership;
 import com.example.dbproject.model.Users;
 import com.example.dbproject.repository.TringMembershipRepo;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -64,6 +66,11 @@ public class UserConverter {
 
     public List<UserDto> convertListToDto(List<Users> usersList) {
         return usersList.stream().map(x -> convertToDto(x)).collect(Collectors.toList());
+
+    }
+    public Page<UserDto> convertpageToDto(Page<Users> userList) {
+        Page<UserDto> list =  userList.map(x -> convertToDto(x));
+        return  list;
 
     }
 }

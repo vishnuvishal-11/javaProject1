@@ -41,7 +41,8 @@ public class CelebrityImpl implements Celebrities {
     public CelebrityDto update(CelebrityDto celebrityDto, Long id) {
         if (celebrityRepository.existsById(id)) {
             Celebrity celebrity = celebrityRepository.getReferenceById(id);
-            celebrity.setName(celebrityDto.getName());
+            celebrity.setFirstName(celebrityDto.getFirstName());
+            celebrity.setLastName(celebrityDto.getLastName());
             celebrity.setLanguages_known(celebrityDto.getLanguages_known());
             celebrity.setAbout(celebrityDto.getAbout());
             celebrity.setDebut(celebrityDto.getDebut());

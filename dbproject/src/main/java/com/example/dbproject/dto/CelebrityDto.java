@@ -10,13 +10,20 @@ import java.util.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+//@RequiredArgsConstructor
 public class CelebrityDto {
 
 
     private Long id;
+
     @NotNull
     @NotEmpty
-    private String name;
+    private String firstName;
+
+    @NotNull
+    @NotEmpty
+    private String lastName;
 
     @NotNull
     @NotEmpty
@@ -34,6 +41,8 @@ public class CelebrityDto {
     @NotNull
     @NotEmpty
     private List<String> tags;
+    @NotNull
+    @NotEmpty
     private List<Object> plans;
     private String qualification;
     private String birth_place;
@@ -41,34 +50,34 @@ public class CelebrityDto {
     private String insta_id;
     private String marital_status;
 
-    public CelebrityDto(Long id, String name, String about, List<String> languages_known, String gender, Date dob, String debut, List<String> tags, List<Object> plans) {
-        this.id = id;
-        this.name = name;
-        this.about = about;
-        this.languages_known = languages_known;
-        this.gender = gender;
-        this.dob = dob;
-        this.debut = debut;
-        this.tags = tags;
-        this.plans = plans;
-    }
-
-    public CelebrityDto(Long id, String name, String about, List<String> languages_known, String gender, Date dob,
-                        String debut, List<String> tags, List<Object> plans, String qualification, String birth_place,
-                        String fb_id, String insta_id, String marital_status) {
-        this.id = id;
-        this.name = name;
-        this.about = about;
-        this.languages_known = languages_known;
-        this.gender = gender;
-        this.dob = dob;
-        this.debut = debut;
-        this.tags = tags;
-        this.plans = plans;
-        this.qualification = qualification;
-        this.birth_place = birth_place;
-        this.fb_id = fb_id;
-        this.insta_id = insta_id;
-        this.marital_status = marital_status;
-    }
+//    public CelebrityDto(Long id, String name, String about, List<String> languages_known, String gender, Date dob, String debut, List<String> tags, List<Object> plans) {
+//        this.id = id;
+//        this.name = name;
+//        this.about = about;
+//        this.languages_known = languages_known;
+//        this.gender = gender;
+//        this.dob = dob;
+//        this.debut = debut;
+//        this.tags = tags;
+//        this.plans = plans;
+//    }
+//
+//    public CelebrityDto(Long id, String name, String about, List<String> languages_known, String gender, Date dob,
+//                        String debut, List<String> tags, List<Object> plans, String qualification, String birth_place,
+//                        String fb_id, String insta_id, String marital_status) {
+//        this.id = id;
+//        this.name = name;
+//        this.about = about;
+//        this.languages_known = languages_known;
+//        this.gender = gender;
+//        this.dob = dob;
+//        this.debut = debut;
+//        this.tags = tags;
+//        this.plans = plans;
+//        this.qualification = qualification;
+//        this.birth_place = birth_place;
+//        this.fb_id = fb_id;
+//        this.insta_id = insta_id;
+//        this.marital_status = marital_status;
+//    }
 }
