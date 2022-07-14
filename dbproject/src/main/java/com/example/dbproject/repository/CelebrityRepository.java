@@ -16,6 +16,8 @@ public interface CelebrityRepository extends JpaRepository<Celebrity,Long>, JpaS
 //    List<Celebrity> getAllList(@Param(value = "celebrity_name") String celebrity_name,@Param(value = "celebrity_id") String celebrity_id,@Param(value = "tags") String tags);
     @Query(value = "SELECT CAST(celebrity_id as varchar), about, birth_place, debut, dob, fb_id, gender, insta_id, languages_known, marital_status, celebrity_name, qualification, tags from celebrity where celebrity.celebrity_name =:celebrity_name",nativeQuery = true)
     List<Celebrity> findByCelebrity_name(@Param(value = "celebrity_name") String celebrity_name);
+
+
 //    @Query(value = "SELECT CAST(celebrity_id as varchar), about, birth_place, debut, dob, fb_id, gender, insta_id, languages_known, marital_status, celebrity_name, qualification, tags from celebrity where celebrity.tags::text LIKE'[%:tags%"]'",nativeQuery = true)
 //    List<Celebrity> getReferencesByTags(@Param(value = "tags")String tags);
 

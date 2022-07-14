@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+      http://www.liquibase.org/xml/ns/pro
+      http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
+
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-2">
+        <createTable tableName="card_details">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="card_details_pkey"/>
+            </column>
+            <column name="card_holder_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="card_number" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiry_date" type="TIMESTAMP(29) WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_fk" type="BIGSERIAL"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-3">
+        <createTable tableName="celebrity">
+            <column autoIncrement="true" name="celebrity_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="celebrity_pkey"/>
+            </column>
+            <column name="about" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_place" type="VARCHAR(255)"/>
+            <column name="debut" type="VARCHAR(255)"/>
+            <column name="dob" type="TIMESTAMP(29) WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fb_id" type="VARCHAR(255)"/>
+            <column name="gender" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="insta_id" type="VARCHAR(255)"/>
+            <column name="languages_known" type="JSONB">  //(2147483647)
+                <constraints nullable="false"/>
+            </column>
+            <column name="marital_status" type="VARCHAR(255)"/>
+            <column name="qualification" type="VARCHAR(255)"/>
+            <column name="tags" type="JSONB">   //(2147483647)
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-4">
+        <createTable tableName="credentials">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="credentials_pkey"/>
+            </column>
+            <column name="authority" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="provider" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-5">
+        <createTable tableName="gst">
+            <column autoIncrement="true" name="order_id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="need_invoice" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gst_num" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="state" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-6">
+        <createTable tableName="orders">
+            <column autoIncrement="true" name="order_id" type="SERIAL">
+                <constraints primaryKey="true" primaryKeyName="orders_pkey"/>
+            </column>
+            <column autoIncrement="true" name="user_id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="applicant_name" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="towhom" type="VARCHAR(15)"/>
+            <column name="membership_code" type="INT"/>
+            <column name="occation" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="occation_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="celebrity_id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="template" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="need_invoice" type="BOOL"/>
+            <column name="keep_video_private" type="BOOL"/>
+            <column name="update_through_whatsapp" type="BOOL"/>
+            <column name="status" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="timestamp" type="TIMESTAMP(29) WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-7">
+        <createTable tableName="tring_membership">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP(29) WITHOUT TIME ZONE"/>
+            <column name="status" type="BOOL"/>
+            <column name="valid_till" type="TIMESTAMP(29) WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-8">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="user_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="invite_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="referred_code" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-10">
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="7"/>
+            <column name="card_holder_name" value="user1_bhai"/>
+            <column name="card_number" valueNumeric="1122334466"/>
+            <column name="expiry_date" valueDate="2029-04-28 14:45:15.0"/>
+            <column name="phone_number" valueNumeric="9144279919"/>
+            <column name="user_fk" valueNumeric="1"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="8"/>
+            <column name="card_holder_name" value="user12 bhai"/>
+            <column name="card_number" valueNumeric="2223334456"/>
+            <column name="expiry_date" valueDate="2027-07-30 14:45:15.0"/>
+            <column name="phone_number" valueNumeric="768890345"/>
+            <column name="user_fk" valueNumeric="1"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="11"/>
+            <column name="card_holder_name" value="user1_bhai"/>
+            <column name="card_number" valueNumeric="1122334466"/>
+            <column name="expiry_date" valueDate="2029-04-28 14:45:15.0"/>
+            <column name="phone_number" valueNumeric="9144279919"/>
+            <column name="user_fk" valueNumeric="2"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="12"/>
+            <column name="card_holder_name" value="user12 bhai"/>
+            <column name="card_number" valueNumeric="2223334456"/>
+            <column name="expiry_date" valueDate="2027-07-30 14:45:15.0"/>
+            <column name="phone_number" valueNumeric="768890345"/>
+            <column name="user_fk" valueNumeric="2"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="13"/>
+            <column name="card_holder_name" value="user1_bhai"/>
+            <column name="card_number" valueNumeric="1122334466"/>
+            <column name="expiry_date" valueDate="2029-04-28 14:45:15.0"/>
+            <column name="phone_number" valueNumeric="9144279919"/>
+            <column name="user_fk" valueNumeric="3"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="14"/>
+            <column name="card_holder_name" value="user12 bhai"/>
+            <column name="card_number" valueNumeric="2223334456"/>
+            <column name="expiry_date" valueDate="2027-07-30 14:45:15.0"/>
+            <column name="phone_number" valueNumeric="768890345"/>
+            <column name="user_fk" valueNumeric="3"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="15"/>
+            <column name="card_holder_name" value="user1_bhai"/>
+            <column name="card_number" valueNumeric="1122334466"/>
+            <column name="expiry_date" valueDate="2029-04-28 20:15:15.0"/>
+            <column name="phone_number" valueNumeric="9144279919"/>
+            <column name="user_fk" valueNumeric="4"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="16"/>
+            <column name="card_holder_name" value="user12 bhai"/>
+            <column name="card_number" valueNumeric="2223334456"/>
+            <column name="expiry_date" valueDate="2027-07-30 20:15:15.0"/>
+            <column name="phone_number" valueNumeric="768890345"/>
+            <column name="user_fk" valueNumeric="4"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="17"/>
+            <column name="card_holder_name" value="user1_bhai"/>
+            <column name="card_number" valueNumeric="1122334466"/>
+            <column name="expiry_date" valueDate="2029-04-28 20:15:15.0"/>
+            <column name="phone_number" valueNumeric="9144279919"/>
+            <column name="user_fk" valueNumeric="5"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="18"/>
+            <column name="card_holder_name" value="user12 bhai"/>
+            <column name="card_number" valueNumeric="2223334456"/>
+            <column name="expiry_date" valueDate="2027-07-30 20:15:15.0"/>
+            <column name="phone_number" valueNumeric="768890345"/>
+            <column name="user_fk" valueNumeric="5"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="19"/>
+            <column name="card_holder_name" value="user1_bhai"/>
+            <column name="card_number" valueNumeric="1122334466"/>
+            <column name="expiry_date" valueDate="2029-04-28 20:15:15.0"/>
+            <column name="phone_number" valueNumeric="9144279919"/>
+            <column name="user_fk" valueNumeric="6"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="20"/>
+            <column name="card_holder_name" value="user12 bhai"/>
+            <column name="card_number" valueNumeric="2223334456"/>
+            <column name="expiry_date" valueDate="2027-07-30 20:15:15.0"/>
+            <column name="phone_number" valueNumeric="768890345"/>
+            <column name="user_fk" valueNumeric="6"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="21"/>
+            <column name="card_holder_name" value="user1_bhai"/>
+            <column name="card_number" valueNumeric="1122334466"/>
+            <column name="expiry_date" valueDate="2029-04-28 20:15:15.0"/>
+            <column name="phone_number" valueNumeric="9144279919"/>
+            <column name="user_fk" valueNumeric="7"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="22"/>
+            <column name="card_holder_name" value="user12 bhai"/>
+            <column name="card_number" valueNumeric="2223334456"/>
+            <column name="expiry_date" valueDate="2027-07-30 20:15:15.0"/>
+            <column name="phone_number" valueNumeric="768890345"/>
+            <column name="user_fk" valueNumeric="7"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="23"/>
+            <column name="card_holder_name" value="user1_bhai"/>
+            <column name="card_number" valueNumeric="1122334466"/>
+            <column name="expiry_date" valueDate="2029-04-28 20:15:15.0"/>
+            <column name="phone_number" valueNumeric="9144279919"/>
+            <column name="user_fk" valueNumeric="8"/>
+        </insert>
+        <insert tableName="card_details">
+            <column name="id" valueNumeric="24"/>
+            <column name="card_holder_name" value="user12 bhai"/>
+            <column name="card_number" valueNumeric="2223334456"/>
+            <column name="expiry_date" valueDate="2027-07-30 20:15:15.0"/>
+            <column name="phone_number" valueNumeric="768890345"/>
+            <column name="user_fk" valueNumeric="8"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-11">
+        <insert tableName="celebrity">
+            <column name="celebrity_id" valueNumeric="30"/>
+            <column name="about" value="about use15"/>
+            <column name="birth_place" value="gujrat"/>
+            <column name="debut" value="vs Pakistan at karachi"/>
+            <column name="dob" valueDate="2019-04-28 20:15:15.0"/>
+            <column name="fb_id" value="user3 fbid"/>
+            <column name="gender" value="male"/>
+            <column name="insta_id" value="user3 insta id"/>
+            <column name="languages_known" value="[&quot;english&quot;, &quot;hindi&quot;, &quot;tamil&quot;]"/>
+            <column name="marital_status" value="single"/>
+            <column name="qualification" value="lawyer"/>
+            <column name="tags" value="[&quot;#sportsman&quot;, &quot;#racer&quot;]"/>
+            <column name="first_name" value="vishnu"/>
+            <column name="last_name" value="vishal"/>
+        </insert>
+        <insert tableName="celebrity">
+            <column name="celebrity_id" valueNumeric="31"/>
+            <column name="about" value="about use15"/>
+            <column name="birth_place" value="gujrat"/>
+            <column name="debut" value="vs Pakistan at karachi"/>
+            <column name="dob" valueDate="2019-04-28 20:15:15.0"/>
+            <column name="fb_id" value="user3 fbid"/>
+            <column name="gender" value="male"/>
+            <column name="insta_id" value="user3 insta id"/>
+            <column name="languages_known" value="[&quot;english&quot;, &quot;hindi&quot;, &quot;tamil&quot;]"/>
+            <column name="marital_status" value="single"/>
+            <column name="qualification" value="lawyer"/>
+            <column name="tags" value="[&quot;#sportsman&quot;, &quot;#racer&quot;]"/>
+            <column name="first_name" value="vivek"/>
+            <column name="last_name" value="dhayalan"/>
+        </insert>
+        <insert tableName="celebrity">
+            <column name="celebrity_id" valueNumeric="32"/>
+            <column name="about" value="about use15"/>
+            <column name="birth_place" value="gujrat"/>
+            <column name="debut" value="vs Pakistan at karachi"/>
+            <column name="dob" valueDate="2019-04-28 20:15:15.0"/>
+            <column name="fb_id" value="user3 fbid"/>
+            <column name="gender" value="male"/>
+            <column name="insta_id" value="user3 insta id"/>
+            <column name="languages_known" value="[&quot;english&quot;, &quot;hindi&quot;, &quot;tamil&quot;]"/>
+            <column name="marital_status" value="single"/>
+            <column name="qualification" value="lawyer"/>
+            <column name="tags" value="[&quot;#sportsman&quot;, &quot;#racer&quot;]"/>
+            <column name="first_name" value="sachin"/>
+            <column name="last_name" value="tendulkar"/>
+        </insert>
+        <insert tableName="celebrity">
+            <column name="celebrity_id" valueNumeric="33"/>
+            <column name="about" value="about use15"/>
+            <column name="birth_place" value="gujrat"/>
+            <column name="debut" value="vs Pakistan at karachi"/>
+            <column name="dob" valueDate="2019-04-28 20:15:15.0"/>
+            <column name="fb_id" value="user3 fbid"/>
+            <column name="gender" value="male"/>
+            <column name="insta_id" value="user3 insta id"/>
+            <column name="languages_known" value="[&quot;english&quot;, &quot;hindi&quot;, &quot;tamil&quot;]"/>
+            <column name="marital_status" value="single"/>
+            <column name="qualification" value="lawyer"/>
+            <column name="tags" value="[&quot;#sportsman&quot;, &quot;#racer&quot;]"/>
+            <column name="first_name" value="rahul"/>
+            <column name="last_name" value="dravid"/>
+        </insert>
+        <insert tableName="celebrity">
+            <column name="celebrity_id" valueNumeric="34"/>
+            <column name="about" value="about use15"/>
+            <column name="birth_place" value="gujrat"/>
+            <column name="debut" value="vs Pakistan at karachi"/>
+            <column name="dob" valueDate="2019-04-28 20:15:15.0"/>
+            <column name="fb_id" value="user3 fbid"/>
+            <column name="gender" value="male"/>
+            <column name="insta_id" value="user3 insta id"/>
+            <column name="languages_known" value="[&quot;english&quot;, &quot;hindi&quot;, &quot;tamil&quot;]"/>
+            <column name="marital_status" value="single"/>
+            <column name="qualification" value="lawyer"/>
+            <column name="tags" value="[&quot;#sportsman&quot;, &quot;#racer&quot;]"/>
+            <column name="first_name" value="shane"/>
+            <column name="last_name" value="warne"/>
+        </insert>
+        <insert tableName="celebrity">
+            <column name="celebrity_id" valueNumeric="35"/>
+            <column name="about" value="about use15"/>
+            <column name="birth_place" value="gujrat"/>
+            <column name="debut" value="vs Pakistan at karachi"/>
+            <column name="dob" valueDate="2019-04-28 20:15:15.0"/>
+            <column name="fb_id" value="user3 fbid"/>
+            <column name="gender" value="male"/>
+            <column name="insta_id" value="user3 insta id"/>
+            <column name="languages_known" value="[&quot;english&quot;, &quot;hindi&quot;, &quot;tamil&quot;]"/>
+            <column name="marital_status" value="single"/>
+            <column name="qualification" value="lawyer"/>
+            <column name="tags" value="[&quot;#sportsman&quot;, &quot;#racer&quot;]"/>
+            <column name="first_name" value="adam"/>
+            <column name="last_name" value="gillchirst"/>
+        </insert>
+        <insert tableName="celebrity">
+            <column name="celebrity_id" valueNumeric="28"/>
+            <column name="about" value="about use15"/>
+            <column name="birth_place" value="gujrat"/>
+            <column name="debut" value="vs Pakistan at karachi"/>
+            <column name="dob" valueDate="2019-04-28 20:15:15.0"/>
+            <column name="fb_id" value="user3 fbid"/>
+            <column name="gender" value="male"/>
+            <column name="insta_id" value="user3 insta id"/>
+            <column name="languages_known" value="[&quot;english&quot;, &quot;hindi&quot;, &quot;tamil&quot;]"/>
+            <column name="marital_status" value="single"/>
+            <column name="qualification" value="lawyer"/>
+            <column name="tags" value="[&quot;#sportsman&quot;, &quot;#racer&quot;]"/>
+            <column name="first_name" value="shane"/>
+            <column name="last_name" value="bond"/>
+        </insert>
+        <insert tableName="celebrity">
+            <column name="celebrity_id" valueNumeric="29"/>
+            <column name="about" value="about use15"/>
+            <column name="birth_place" value="gujrat"/>
+            <column name="debut" value="vs Pakistan at karachi"/>
+            <column name="dob" valueDate="2019-04-28 20:15:15.0"/>
+            <column name="fb_id" value="user3 fbid"/>
+            <column name="gender" value="male"/>
+            <column name="insta_id" value="user3 insta id"/>
+            <column name="languages_known" value="[&quot;english&quot;, &quot;hindi&quot;, &quot;tamil&quot;]"/>
+            <column name="marital_status" value="single"/>
+            <column name="qualification" value="lawyer"/>
+            <column name="tags" value="[&quot;#sportsman&quot;, &quot;#racer&quot;]"/>
+            <column name="first_name" value="glenn"/>
+            <column name="last_name" value="macrath"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-12">
+        <insert tableName="credentials">
+            <column name="id" valueNumeric="1"/>
+            <column name="authority" value="ADMIN"/>
+            <column name="password" value="admin"/>
+            <column name="role" value="ADMIN"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="username" value="admin"/>
+            <column name="provider"/>
+        </insert>
+        <insert tableName="credentials">
+            <column name="id" valueNumeric="2"/>
+            <column name="authority" value="USER"/>
+            <column name="password" value="user"/>
+            <column name="role" value="USER"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="username" value="user"/>
+            <column name="provider"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-13">
+        <insert tableName="orders">
+            <column name="order_id" valueNumeric="1"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="applicant_name" value="vishnu"/>
+            <column name="towhom" value="vivek"/>
+            <column name="membership_code"/>
+            <column name="occation" value="birthday"/>
+            <column name="occation_date" valueDate="1996-04-11"/>
+            <column name="celebrity_id" valueNumeric="2"/>
+            <column name="template" value="happy birthday vivek..."/>
+            <column name="type" value="video_record"/>
+            <column name="email" value="vivek@gmail.com"/>
+            <column name="price" valueNumeric="8000"/>
+            <column name="phone" valueNumeric="4427991668"/>
+            <column name="need_invoice" valueBoolean="true"/>
+            <column name="keep_video_private"/>
+            <column name="update_through_whatsapp"/>
+            <column name="status" value="order_placed"/>
+            <column name="timestamp" valueDate="2022-06-29 21:24:17.588572"/>
+        </insert>
+        <insert tableName="orders">
+            <column name="order_id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="applicant_name" value="vishnu"/>
+            <column name="towhom" value="person2"/>
+            <column name="membership_code"/>
+            <column name="occation" value="birthday"/>
+            <column name="occation_date" valueDate="1996-04-11"/>
+            <column name="celebrity_id" valueNumeric="2"/>
+            <column name="template" value="happy birthday person2..."/>
+            <column name="type" value="video_record"/>
+            <column name="email" value="vivek@gmail.com"/>
+            <column name="price" valueNumeric="8000"/>
+            <column name="phone" valueNumeric="4427991668"/>
+            <column name="need_invoice" valueBoolean="true"/>
+            <column name="keep_video_private"/>
+            <column name="update_through_whatsapp"/>
+            <column name="status" value="order_placed"/>
+            <column name="timestamp" valueDate="2022-06-29 21:24:17.588572"/>
+        </insert>
+        <insert tableName="orders">
+            <column name="order_id" valueNumeric="3"/>
+            <column name="user_id" valueNumeric="2"/>
+            <column name="applicant_name" value="vishnu"/>
+            <column name="towhom" value="person2"/>
+            <column name="membership_code"/>
+            <column name="occation" value="birthday"/>
+            <column name="occation_date" valueDate="1996-04-11"/>
+            <column name="celebrity_id" valueNumeric="2"/>
+            <column name="template" value="happy birthday person2..."/>
+            <column name="type" value="video_record"/>
+            <column name="email" value="vivek@gmail.com"/>
+            <column name="price" valueNumeric="8000"/>
+            <column name="phone" valueNumeric="4427991668"/>
+            <column name="need_invoice" valueBoolean="true"/>
+            <column name="keep_video_private"/>
+            <column name="update_through_whatsapp"/>
+            <column name="status" value="order_placed"/>
+            <column name="timestamp" valueDate="2022-06-29 21:24:17.588572"/>
+        </insert>
+        <insert tableName="orders">
+            <column name="order_id" valueNumeric="4"/>
+            <column name="user_id" valueNumeric="3"/>
+            <column name="applicant_name" value="vishnu"/>
+            <column name="towhom" value="person2"/>
+            <column name="membership_code"/>
+            <column name="occation" value="birthday"/>
+            <column name="occation_date" valueDate="1996-04-11"/>
+            <column name="celebrity_id" valueNumeric="2"/>
+            <column name="template" value="happy birthday person2..."/>
+            <column name="type" value="video_record"/>
+            <column name="email" value="vivek@gmail.com"/>
+            <column name="price" valueNumeric="8000"/>
+            <column name="phone" valueNumeric="4427991668"/>
+            <column name="need_invoice" valueBoolean="false"/>
+            <column name="keep_video_private"/>
+            <column name="update_through_whatsapp"/>
+            <column name="status" value="order_placed"/>
+            <column name="timestamp" valueDate="2022-06-29 21:24:17.588572"/>
+        </insert>
+        <insert tableName="orders">
+            <column name="order_id" valueNumeric="5"/>
+            <column name="user_id" valueNumeric="3"/>
+            <column name="applicant_name" value="vishnu"/>
+            <column name="towhom" value="person5"/>
+            <column name="membership_code"/>
+            <column name="occation" value="birthday"/>
+            <column name="occation_date" valueDate="1996-04-11"/>
+            <column name="celebrity_id" valueNumeric="2"/>
+            <column name="template" value="happy birthday person5..."/>
+            <column name="type" value="video_record"/>
+            <column name="email" value="vivek@gmail.com"/>
+            <column name="price" valueNumeric="8000"/>
+            <column name="phone" valueNumeric="4427991668"/>
+            <column name="need_invoice"/>
+            <column name="keep_video_private"/>
+            <column name="update_through_whatsapp"/>
+            <column name="status" value="order_placed"/>
+            <column name="timestamp" valueDate="2022-06-29 21:24:17.588572"/>
+        </insert>
+        <insert tableName="orders">
+            <column name="order_id" valueNumeric="6"/>
+            <column name="user_id" valueNumeric="3"/>
+            <column name="applicant_name" value="vishnu"/>
+            <column name="towhom" value="person5"/>
+            <column name="membership_code"/>
+            <column name="occation" value="birthday"/>
+            <column name="occation_date" valueDate="1996-04-11"/>
+            <column name="celebrity_id" valueNumeric="2"/>
+            <column name="template" value="happy birthday person5..."/>
+            <column name="type" value="video_record"/>
+            <column name="email" value="vivek@gmail.com"/>
+            <column name="price" valueNumeric="8000"/>
+            <column name="phone" valueNumeric="4427991668"/>
+            <column name="need_invoice"/>
+            <column name="keep_video_private"/>
+            <column name="update_through_whatsapp"/>
+            <column name="status" value="order_placed"/>
+            <column name="timestamp" valueDate="2022-06-29 21:24:17.588572"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-14">
+        <insert tableName="tring_membership">
+            <column name="user_id" valueNumeric="1"/>
+            <column name="created_at" valueDate="2016-04-28 20:15:15.0"/>
+            <column name="status" valueBoolean="false"/>
+            <column name="valid_till" valueDate="2018-04-28 20:15:15.0"/>
+        </insert>
+        <insert tableName="tring_membership">
+            <column name="user_id" valueNumeric="2"/>
+            <column name="created_at" valueDate="2016-04-28 20:15:15.0"/>
+            <column name="status" valueBoolean="false"/>
+            <column name="valid_till" valueDate="2018-04-28 20:15:15.0"/>
+        </insert>
+        <insert tableName="tring_membership">
+            <column name="user_id" valueNumeric="3"/>
+            <column name="created_at" valueDate="2016-04-28 20:15:15.0"/>
+            <column name="status" valueBoolean="false"/>
+            <column name="valid_till" valueDate="2018-04-28 20:15:15.0"/>
+        </insert>
+        <insert tableName="tring_membership">
+            <column name="user_id" valueNumeric="4"/>
+            <column name="created_at" valueDate="2016-04-28 20:15:15.0"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="valid_till" valueDate="2018-04-28 20:15:15.0"/>
+        </insert>
+        <insert tableName="tring_membership">
+            <column name="user_id" valueNumeric="5"/>
+            <column name="created_at" valueDate="2016-04-28 20:15:15.0"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="valid_till" valueDate="2018-04-28 20:15:15.0"/>
+        </insert>
+        <insert tableName="tring_membership">
+            <column name="user_id" valueNumeric="6"/>
+            <column name="created_at" valueDate="2016-04-28 20:15:15.0"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="valid_till" valueDate="2018-04-28 20:15:15.0"/>
+        </insert>
+        <insert tableName="tring_membership">
+            <column name="user_id" valueNumeric="7"/>
+            <column name="created_at" valueDate="2016-04-28 20:15:15.0"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="valid_till" valueDate="2018-04-28 20:15:15.0"/>
+        </insert>
+        <insert tableName="tring_membership">
+            <column name="user_id" valueNumeric="8"/>
+            <column name="created_at" valueDate="2016-04-28 20:15:15.0"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="valid_till" valueDate="2018-04-28 20:15:15.0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-15">
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="1"/>
+            <column name="email" value="user7@gmail.com"/>
+            <column name="invite_code" value="user-1245---code"/>
+            <column name="user_name" value="vishnu vishal"/>
+            <column name="password" value="password1"/>
+            <column name="referred_code" value="2019-04-28T14:45:15"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="2"/>
+            <column name="email" value="user2@gmail.com"/>
+            <column name="invite_code" value="user-2---code"/>
+            <column name="user_name" value="vivek dhayalan"/>
+            <column name="password" value="password1"/>
+            <column name="referred_code" value="2019-04-28T14:45:15"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="3"/>
+            <column name="email" value="user3@gmail.com"/>
+            <column name="invite_code" value="user-3---code"/>
+            <column name="user_name" value="sachin tendulkar"/>
+            <column name="password" value="password1"/>
+            <column name="referred_code" value="2019-04-28T14:45:15"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="4"/>
+            <column name="email" value="user4@gmail.com"/>
+            <column name="invite_code" value="user-4---code"/>
+            <column name="user_name" value="4"/>
+            <column name="password" value="password1"/>
+            <column name="referred_code" value="2019-04-28T14:45:15"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="5"/>
+            <column name="email" value="user5@gmail.com"/>
+            <column name="invite_code" value="user-5---code"/>
+            <column name="user_name" value="5"/>
+            <column name="password" value="password1"/>
+            <column name="referred_code" value="2019-04-28T14:45:15"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="6"/>
+            <column name="email" value="user6@gmail.com"/>
+            <column name="invite_code" value="user-6---code"/>
+            <column name="user_name" value="6"/>
+            <column name="password" value="password1"/>
+            <column name="referred_code" value="2019-04-28T14:45:15"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="7"/>
+            <column name="email" value="use7@gmail.com"/>
+            <column name="invite_code" value="user-7---code"/>
+            <column name="user_name" value="7"/>
+            <column name="password" value="password1"/>
+            <column name="referred_code" value="2019-04-28T14:45:15"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="8"/>
+            <column name="email" value="use8@gmail.com"/>
+            <column name="invite_code" value="user-8---code"/>
+            <column name="user_name" value="8"/>
+            <column name="password" value="password1"/>
+            <column name="referred_code" value="2019-04-28T14:45:15"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="9"/>
+            <column name="email" value="user9@gmail.com"/>
+            <column name="invite_code" value="user9 invite code"/>
+            <column name="user_name" value="user 9"/>
+            <column name="password" value="pass"/>
+            <column name="referred_code" value="refferedcode1"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="10"/>
+            <column name="email" value="user10@gmail.com"/>
+            <column name="invite_code" value="user10 invite code"/>
+            <column name="user_name" value="user 10"/>
+            <column name="password" value="pass"/>
+            <column name="referred_code" value="refferedcode2"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="11"/>
+            <column name="email" value="user11@gmail.com"/>
+            <column name="invite_code" value="user11 invite code"/>
+            <column name="user_name" value="user 11"/>
+            <column name="password" value="pass"/>
+            <column name="referred_code" value="refferedcode3"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="12"/>
+            <column name="email" value="user12@gmail.com"/>
+            <column name="invite_code" value="user12invite code"/>
+            <column name="user_name" value="user 12"/>
+            <column name="password" value="pass"/>
+            <column name="referred_code" value="refferedcode4"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="13"/>
+            <column name="email" value="user13@gmail.com"/>
+            <column name="invite_code" value="user13invite code"/>
+            <column name="user_name" value="user 13"/>
+            <column name="password" value="pass"/>
+            <column name="referred_code" value="refferedcode5"/>
+            <column name="status" value="active"/>
+        </insert>
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="14"/>
+            <column name="email" value="user14@gmail.com"/>
+            <column name="invite_code" value="user14 invite code"/>
+            <column name="user_name" value="user 14"/>
+            <column name="password" value="pass"/>
+            <column name="referred_code" value="refferedcode6"/>
+            <column name="status" value="active"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-16">
+        <addPrimaryKey columnNames="user_id" constraintName="tring_membership_pkey" tableName="tring_membership"/>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-17">
+        <addUniqueConstraint columnNames="order_id" constraintName="gst_order_id_key" tableName="gst"/>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-18">
+        <addUniqueConstraint columnNames="celebrity_id, order_id, email" constraintName="orders_celebrity_id_order_id_email_key" tableName="orders"/>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-19">
+        <addUniqueConstraint columnNames="order_id, email" constraintName="orders_order_id_email_key" tableName="orders"/>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-20">
+        <addUniqueConstraint columnNames="order_id, need_invoice" constraintName="orders_order_id_need_invoice_key" tableName="orders"/>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-21">
+        <addUniqueConstraint columnNames="email" constraintName="uk_6dotkott2kjsp8vw4d0m25fb7" tableName="users"/>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-22">
+        <addUniqueConstraint columnNames="invite_code" constraintName="uk_6hglwlkeap17hv0j2n8gqi2q" tableName="users"/>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-23">
+        <addUniqueConstraint columnNames="username" constraintName="uk_l7xhygibdj6cgkpj2ih1jgx14" tableName="credentials"/>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-24">
+        <addForeignKeyConstraint baseColumnNames="user_fk" baseTableName="card_details" constraintName="FKj951vc7wt0wp5wnkfigp0d5h2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-25">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="tring_membership" constraintName="FKmrk8rmwg3cjj4ifxp15lhpew3" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="vishnu vishal (generated)" id="1657799303206-26">
+        <addForeignKeyConstraint baseColumnNames="order_id,need_invoice" baseTableName="gst" constraintName="booked_list_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="order_id,need_invoice" referencedTableName="orders"/>
+    </changeSet>
+</databaseChangeLog>

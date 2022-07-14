@@ -7,14 +7,13 @@
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
       http://www.liquibase.org/xml/ns/pro
       http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
-    <preConditions>
-        <dbms type="postgresql" />
-        <runningAs username="postgres" />
-    </preConditions>
+    <changeSet author="author_9" id="9">
+<sql dbms="postgresql">
+    COPY celebrity(celebrity_id, first_name,last_name, about,languages_known,gender,dob,tags,qualification, birth_place,fb_id,insta_id, debut, marital_status)
+    FROM 'C:\Users\vishn\OneDrive\Pictures\students\cel data.csv'
+    DELIMITER '/'
+    CSV HEADER;
 
-
-<!--<includeAll path="db/changeLog"  />-->
-<!--    <include file="db/changeLog/liquibase-changeLog v.01.xml" ignore="true"/>-->
-<!--    <include file="db/changeLog/liquibase-changeLog v.02.xml"  ignore="true"/>-->
-<!--    <include file="db/changeLog/liquibase-changeLog v.11.xml"  ignore="true"/>-->
+</sql>
+    </changeSet>
 </databaseChangeLog>

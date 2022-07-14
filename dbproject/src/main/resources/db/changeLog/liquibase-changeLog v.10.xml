@@ -7,14 +7,13 @@
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
       http://www.liquibase.org/xml/ns/pro
       http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
-    <preConditions>
-        <dbms type="postgresql" />
-        <runningAs username="postgres" />
-    </preConditions>
+    <changeSet author="author_10" id="10">
+        <sql dbms="postgresql">
+            COPY users( user_name, password,email, invite_code, referred_code, status)
+            FROM 'C:\Users\vishn\OneDrive\Documents\sridharan\data.csv'
+            DELIMITER ','
+            CSV HEADER;
 
-
-<!--<includeAll path="db/changeLog"  />-->
-<!--    <include file="db/changeLog/liquibase-changeLog v.01.xml" ignore="true"/>-->
-<!--    <include file="db/changeLog/liquibase-changeLog v.02.xml"  ignore="true"/>-->
-<!--    <include file="db/changeLog/liquibase-changeLog v.11.xml"  ignore="true"/>-->
+        </sql>
+    </changeSet>
 </databaseChangeLog>

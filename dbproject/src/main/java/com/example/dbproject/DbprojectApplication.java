@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -28,7 +29,6 @@ import static org.springframework.orm.hibernate5.SessionFactoryUtils.getDataSour
 @EntityScan(basePackages = "com.example.dbproject.model")
 @EnableAutoConfiguration//(exclude = LiquibaseAutoConfiguration.class)
 @Slf4j
-//@EnableWebMvc
 public class DbprojectApplication {
     @Autowired
     private Environment env;
@@ -41,13 +41,9 @@ public class DbprojectApplication {
     public SpringLiquibase liquibase() {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setChangeLog("classpath:/db/changeLog/db.changelog-master.xml");
-        log.info("cl: "+liquibase.getChangeLog());
         liquibase.setDataSource(dataSource());
         return liquibase;
     }
-
-
-
     @Bean
     public LiquibaseProperties liquibaseProperties() {
         return new LiquibaseProperties();
@@ -60,12 +56,6 @@ public class DbprojectApplication {
         dataSource.setUsername(env.getProperty("spring.datasource.username"));
         dataSource.setPassword(env.getProperty("spring.datasource.password"));
         dataSource.setSchema("public");
-        log.info("env: "+env.getProperty("spring.datasource.driver-class-name"));
-        log.info("un: "+dataSource.getUsername());
-        log.info("catalog: "+dataSource.getCatalog());
-        log.info("url: "+dataSource.getUrl());
-        log.info("password: "+dataSource.getPassword());
-        log.info("schema: "+dataSource.getSchema());
         return dataSource;
     }
 

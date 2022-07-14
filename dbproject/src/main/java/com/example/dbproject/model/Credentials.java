@@ -28,6 +28,9 @@ public class Credentials implements Serializable {
     private String authority;
     @Column(name = "status", nullable = false)
     private String status;
+
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
     public Credentials(String username, String password, String role, String authority,String status) {
         this.userName = username;
         this.password = password;

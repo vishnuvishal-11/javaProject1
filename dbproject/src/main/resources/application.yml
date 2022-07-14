@@ -6,3 +6,25 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
+
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 339978069723-d5c1i0nbh6ueh4abclj8to2lhqaciuae.apps.googleusercontent.com
+            clientSecret: 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
+            scope:
+              - email
+              - profile
+        accessTokenUri: https://www.googleapis.com/oauth2/v3/token
+        userAuthorizationUri: https://www.google.com/o/oauth2/auth
+        tokenName: oauth_token
+        authenticationScheme: query
+        clientAuthenticationScheme: form
+
+        resource:
+         userInfoUri: https://www.googleapis.com/userinfo/v2/me
+         preferTokenInfo: false

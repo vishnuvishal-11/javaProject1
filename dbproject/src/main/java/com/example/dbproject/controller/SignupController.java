@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -58,7 +59,7 @@ public class SignupController {
     @PostMapping(value = "/authenticate", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(value = "creation of JWT token", notes = "This method creates a jwt token  for the admin")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws BadCredentialsException, ExpiredJwtException {
-       List<Credentials> list= credentialRepository.findByUserName(authenticationRequest.getUsername());
+        List<Credentials> list = credentialRepository.findByUserName(authenticationRequest.getUsername());
         if (!list.isEmpty())
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
@@ -69,5 +70,10 @@ public class SignupController {
                 .password(authenticationRequest.getPassword()).roles(list.get(0).getRole()).authorities(list.get(0).getAuthority()).build();
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.accepted().body(new AuthenticationResponse(jwt));
+    }
+
+    @GetMapping("/user/me")
+    public Principal user(Principal principal) {
+        return principal;
     }
 }
