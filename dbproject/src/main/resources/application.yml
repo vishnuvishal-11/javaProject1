@@ -14,17 +14,17 @@ spring:
       client:
         registration:
           google:
-            clientId: 339978069723-d5c1i0nbh6ueh4abclj8to2lhqaciuae.apps.googleusercontent.com
-            clientSecret: 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
+            clientId: 339978069723-f1p6isqebrk3atjjv5narrppgl3jq36g.apps.googleusercontent.com
+            clientSecret: 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
             scope:
               - email
               - profile
-        accessTokenUri: https://www.googleapis.com/oauth2/v3/token
-        userAuthorizationUri: https://www.google.com/o/oauth2/auth
-        tokenName: oauth_token
-        authenticationScheme: query
-        clientAuthenticationScheme: form
-
-        resource:
-         userInfoUri: https://www.googleapis.com/userinfo/v2/me
-         preferTokenInfo: false
+#        accessTokenUri: https://www.googleapis.com/oauth2/v3/token
+#        userAuthorizationUri: https://www.google.com/o/oauth2/auth
+#        tokenName: oauth_token
+#        authenticationScheme: query
+#        clientAuthenticationScheme: form
+#
+#        resource:
+#         userInfoUri: https://www.googleapis.com/userinfo/v2/me
+#         preferTokenInfo: false
