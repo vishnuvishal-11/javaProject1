@@ -38,23 +38,15 @@ import javax.persistence.EntityNotFoundException;
 public class CelebrityController {
     @Autowired
     Celebrities celebrity;
+
     @Autowired
     AuthenticationManager authenticationManager;
+
     @Autowired
     InMemoryUserDetailsManager inMemoryUserDetailsManager;
+
     @Autowired
     private JwtUtils jwtTokenUtil;
-    public static final String TEXT_HTML_VALUE = "welcome.html";
-
-    @GetMapping(value = "/", produces = {MediaType.TEXT_HTML_VALUE})
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public String readpath() throws ExpiredJwtException {
-        return "<html>\n" + "<header><title>Welcome</title></header>\n" +
-                "<body>\n" + "<div><h4>\n" +
-                "<a href=\"http://localhost:8082/login\">click to enter login page</a></h4>\n" +
-                "</div>" + "</body>\n" + "</html>";
-    }
 
 
     @GetMapping(value = "/celebrity/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -68,8 +60,11 @@ public class CelebrityController {
     @GetMapping(value = "/celebrity/", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     @ApiOperation(value = "Read All celebrities", notes = "This method fetches all  celebrities with pagination of given id")
-    public Page<CelebrityDto> readAll(@RequestParam(value = "search", required = false) String search, @RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
-                                      @RequestParam(value = "pagesize", required = false, defaultValue = "5") int pageSize, @RequestParam(value = "field", required = false, defaultValue = "id") String field) throws ExpiredJwtException {
+    public Page<CelebrityDto> readAll(@RequestParam(value = "search", required = false) String search, @RequestParam(value = "offset",
+            required = false, defaultValue = "0") int offset,
+                                      @RequestParam(value = "pagesize", required = false, defaultValue = "5") int pageSize,
+                                      @RequestParam(value = "field", required = false, defaultValue = "id") String field)
+            throws ExpiredJwtException {
         return celebrity.getAll(search, offset, pageSize, field);
     }
 
@@ -101,20 +96,6 @@ public class CelebrityController {
     public CelebrityDto update(@RequestBody CelebrityDto CelebrityDto, @PathVariable Long id) throws ExpiredJwtException {
         return (CelebrityDto) celebrity.update(CelebrityDto, id);
     }
-
-//    @PostMapping(value = "/authenticate",produces = {MediaType.APPLICATION_JSON_VALUE})
-//    @ApiOperation(value = "creation of JWT token", notes = "This method creates a jwt token  for the admin")
-//    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest  authenticationRequest) throws BadCredentialsException,ExpiredJwtException {
-//            if(inMemoryUserDetailsManager.userExists(authenticationRequest.getUsername()))
-//            authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
-//            );
-//            else
-//            return  null;
-//        final UserDetails userDetails = inMemoryUserDetailsManager.loadUserByUsername(authenticationRequest.getUsername());
-//        final String jwt = jwtTokenUtil.generateToken(userDetails);
-//        return ResponseEntity.accepted().body(new AuthenticationResponse(jwt));
-//    }
 
 
 }

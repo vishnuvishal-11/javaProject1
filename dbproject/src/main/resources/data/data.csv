@@ -1,0 +1,7 @@
+﻿user_name,password,email,invite_code,referred_code,status
+user 9,pass,user9@gmail.com,user9 invite code,refferedcode1,active
+user 10,pass,user10@gmail.com,user10 invite code,refferedcode2,active
+user 11,pass,user11@gmail.com,user11 invite code,refferedcode3,active
+user 12,pass,user12@gmail.com,user12invite code,refferedcode4,active
+user 13,pass,user13@gmail.com,user13invite code,refferedcode5,active
+user 14,pass,user14@gmail.com,user14 invite code,refferedcode6,active

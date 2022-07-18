@@ -2,6 +2,8 @@ package com.example.dbproject.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,12 +24,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtUtils jwtUtil;
     @Autowired
     InMemoryUserDetailsManager inMemoryUserDetailsManager;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, ExpiredJwtException {
         final String authorizationHeader = request.getHeader("Authorization");
 
         String username = null;
         String jwt = null;
+try {
+
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
@@ -48,6 +53,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
+}catch (Exception n){
+    response.addHeader("jwt token expired","jwt token expired");
+    response.setStatus(HttpStatus.UNAUTHORIZED.value());
+}
         filterChain.doFilter(request, response);
     }
     public String  getJWTfromRequest(HttpServletRequest request){

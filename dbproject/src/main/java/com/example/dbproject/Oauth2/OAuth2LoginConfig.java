@@ -18,8 +18,8 @@ public class OAuth2LoginConfig {
 
     private ClientRegistration googleClientRegistration() {
         return ClientRegistration.withRegistrationId("google")
-                .clientId("339978069723-f1p6isqebrk3atjjv5narrppgl3jq36g.apps.googleusercontent.com")
-                .clientSecret("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")
+                .clientId("339978069723-ou36ab58gnn2bm")
+                .clientSecret("GOCSPX-pFtly9b2")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")

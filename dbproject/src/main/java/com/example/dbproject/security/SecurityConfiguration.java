@@ -44,19 +44,7 @@ public class SecurityConfiguration extends WebMvcAutoConfiguration {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-//    private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
-//            "classpath:/META-INF/resources/", "classpath:/resources/",
-//            "classpath:/static/", "classpath:/public/" };
-//    Authentication authentication =
-//            SecurityContextHolder.getContext().getAuthentication();
 
-//    OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-//    OAuth2AuthorizedClient client =
-//            clientService.loadAuthorizedClient(
-//                    oauthToken.getAuthorizedClientRegistrationId(),
-//                    oauthToken.getName());
-//
-//    String accessToken = client.getAccessToken().getTokenValue();
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
@@ -73,11 +61,7 @@ public class SecurityConfiguration extends WebMvcAutoConfiguration {
                 .build();
         return new InMemoryUserDetailsManager(user, user2);
     }
-//    @Bean
-//   public SecurityFilterChain filterChain2(HttpSecurity http) throws Exception {
-//
-//        return http.build();
-//    }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -92,11 +76,11 @@ public class SecurityConfiguration extends WebMvcAutoConfiguration {
                         .regexMatchers( "/authenticate", "/signup")
                         .hasAnyRole("USER", "CELEBRITY","ADMIN", "SUPER_ADMIN")
                         .regexMatchers( "/auth", "/enter")
-                        .authenticated()
+                        .permitAll()
                 ).exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .oauth2Login().defaultSuccessUrl("http://localhost:8082/enter",true).and()
-                .formLogin().loginPage("/auth.html").successForwardUrl("http://localhost:8082/swagger-ui/index.html").and()
+              //  .formLogin().loginPage("/auth.html").successForwardUrl("http://localhost:8082/swagger-ui/index.html").and()
                 .httpBasic(withDefaults());
 
         http.csrf().disable().cors().and()
@@ -105,7 +89,7 @@ public class SecurityConfiguration extends WebMvcAutoConfiguration {
                 ).exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().oauth2Login()
                 .defaultSuccessUrl("http://localhost:8082/enter",true).and()
-                .formLogin().loginPage("/auth.html").successForwardUrl("http://localhost:8082/swagger-ui/index.html").and()
+              //  .formLogin().loginPage("/auth.html").successForwardUrl("http://localhost:8082/swagger-ui/index.html").and()
                 .httpBasic(withDefaults());
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
@@ -117,16 +101,6 @@ public class SecurityConfiguration extends WebMvcAutoConfiguration {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        if (!registry.hasMappingForPattern("/webjars/**")) {
-//            registry.addResourceHandler("/webjars/**").addResourceLocations(
-//                    "classpath:/META-INF/resources/webjars/");
-//        }
-//        if (!registry.hasMappingForPattern("/**")) {
-//            registry.addResourceHandler("/**").addResourceLocations(
-//                    CLASSPATH_RESOURCE_LOCATIONS);
-//        }
-//    }
 
 }
 

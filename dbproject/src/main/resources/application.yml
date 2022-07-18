@@ -14,11 +14,12 @@ spring:
       client:
         registration:
           google:
-            clientId: 339978069723-f1p6isqebrk3atjjv5narrppgl3jq36g.apps.googleusercontent.com
-            clientSecret: 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
+            clientId: 339978069723-ou36ab58leusercontent.com
+            clientSecret: GOCSPX-p9Kly9b2
             scope:
               - email
               - profile
+              - openid
 #        accessTokenUri: https://www.googleapis.com/oauth2/v3/token
 #        userAuthorizationUri: https://www.google.com/o/oauth2/auth
 #        tokenName: oauth_token
